@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Parte_2_Capitulos_019-" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Parte_2_Capitulos_019-" target="21" />
+      <module name="video_8_Entrada_datos_por_consola" target="21" />
+      <module name="video_8_Entrada_datos_por_el_teclado" target="21" />
+      <module name="video_8_Entrada_datos_teclado" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
