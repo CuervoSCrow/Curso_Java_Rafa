@@ -16,6 +16,6 @@ public class Herencia {
         Gato gato = new Gato("Garfield", 5, "Naranja");
         gato.maullar();
         gato.cazar();
-        gato.comer()    ;
+        gato.comer();
     }
 }
