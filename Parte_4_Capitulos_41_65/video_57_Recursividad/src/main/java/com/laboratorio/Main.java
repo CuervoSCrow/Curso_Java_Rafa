@@ -41,13 +41,22 @@ public class Main {
                     MaximoComunDivisor maximoComunDivisor = new MaximoComunDivisor();
                     break;
                 case 9:
+                    SumaDigitos sumaDigitos = new SumaDigitos();
+                    break;
+                case 10:
+                    TorresDeHanoi TorresDeHanoi = new TorresDeHanoi();
+                    break;
+                case 11:
+                    BusquedaBinaria busquedaBinaria = new BusquedaBinaria();
+                    break;
+                case 0:
                     System.out.println("Saliendo !!!!!!");
                     break;
                 default:
                     System.out.println("Opcion no valida");
                     break;
             }
-        } while (opcion != 9);
+        } while (opcion != 0 );
     }
     public static void menu(){
         System.out.println("Operaciones que este programa puede realizar ");
@@ -59,8 +68,11 @@ public class Main {
         System.out.println("6. Invertir Cadena");
         System.out.println("7. Palindromo");
         System.out.println("8. Maximo Comun Divisor");
+        System.out.println("9. Suma de digitos");
+        System.out.println("10. Torres de Hanoi");
+        System.out.println("11. Busqueda Binaria");
         System.out.println();
-        System.out.println("9. Salir");
+        System.out.println("0. Salir");
 
     }
 }
