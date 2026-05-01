@@ -1,6 +1,7 @@
 package com.laboratorio.ejerciciosRecursividad;
 
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Peticiones {
     private Scanner entrada = new Scanner(System.in);
@@ -35,8 +36,16 @@ public class Peticiones {
     }
     public void mostrarArray(int[] array){
         for(int i=0;i<array.length;i++){
-            System.out.print(array[i]+", ");
+            if(i==array.length-1) {
+                System.out.println(array[i]);
+            }else {
+                System.out.print(array[i] + ", ");
+            }
         }
+    }
+    public int[] ordenarArregloIntASC(int[] arreglo){
+        Arrays.sort(arreglo);
+        return arreglo;
     }
 
     public String dameCadena(){
