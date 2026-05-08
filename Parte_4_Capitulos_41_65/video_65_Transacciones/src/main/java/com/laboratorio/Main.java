@@ -4,25 +4,25 @@ import java.sql.*;
 
 public class Main {
 
-    public static void mostrarMunicipios(Connection con){
-        Statement statement;
-        ResultSet resultSet;
-        int i=0;
-        try{
-            statement= con.createStatement();
-            resultSet= statement.executeQuery("SELECT * FROM municipios");
-            if(resultSet==null){
-                System.out.println("No hay empleados");
+        public static void mostrarMunicipios(Connection con){
+            Statement statement;
+            ResultSet resultSet;
+            int i=0;
+            try{
+                statement= con.createStatement();
+                resultSet= statement.executeQuery("SELECT * FROM municipios");
+                if(resultSet==null){
+                    System.out.println("No hay empleados");
+                }
+                while(resultSet.next()){
+                    i++;
+                    System.out.println(i+".- Municipio: "+resultSet.getString("Municipio"));
+                }
+                System.out.println("Total de empleados: "+i);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
             }
-            while(resultSet.next()){
-                i++;
-                System.out.println(i+".- Municipio: "+resultSet.getString("Municipio"));
-            }
-            System.out.println("Total de empleados: "+i);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
         }
-    }
     public static void insertarMunicipio(Connection con,
                                          int claveInegi,
                                          String municipio,
