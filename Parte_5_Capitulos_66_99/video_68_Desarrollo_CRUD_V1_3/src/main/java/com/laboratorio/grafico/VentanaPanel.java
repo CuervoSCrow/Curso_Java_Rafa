@@ -19,6 +19,8 @@ public class VentanaPanel extends JFrame{
     private JTable tPersonas;
     private MyTableModel modelo;
     private JLabel lblMensaje;
+    private JButton btnAgregar, btnEliminar, btnActualizar;
+    private EditarPersonas editarPersonas;
 
     public VentanaPanel() {
         super("Lista de Personas");
@@ -29,7 +31,7 @@ public class VentanaPanel extends JFrame{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLayout(new BorderLayout(10,10));
-
+        setResizable(false);
 
 //        Crear Panel con tabla adentro
         JPanel panelTabla = new JPanel();
@@ -52,14 +54,13 @@ public class VentanaPanel extends JFrame{
         tPersonas.setRowSelectionAllowed(true);
         tPersonas.setColumnSelectionAllowed(false);
 
-
 //        Crea panel con 3 botones sur
         JPanel panelBotones = new JPanel(new FlowLayout());
         panelBotones.setBorder(BorderFactory.createTitledBorder("Panel con Botones"));
 
-        JButton btnAgregar = new JButton("Agregar");
-        JButton btnEliminar = new JButton("Eliminar");
-        JButton btnActualizar = new JButton("Actualizar");
+        btnAgregar = new JButton("Agregar");
+        btnEliminar = new JButton("Eliminar");
+        btnActualizar = new JButton("Actualizar");
 
         panelBotones.add(btnAgregar);
         panelBotones.add(btnEliminar);
@@ -90,6 +91,7 @@ public class VentanaPanel extends JFrame{
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+        editarPersonas.iniciarVariables(this,con);
 //        Desactiva  botones
         btnEliminar.setEnabled(false);
         btnActualizar.setEnabled(false);
@@ -99,14 +101,12 @@ public class VentanaPanel extends JFrame{
         btnAgregar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                SImular agregar una fila con datos de ejemplo
-                Object[] fila = {
-                        modelo.getRowCount() + 1,
-                        "Producto " + (modelo.getRowCount() + 1),
-                        100.0 * (modelo.getRowCount() + 1)
-                };
-                modelo.addRow(fila);
-                lblMensaje.setText("Producto agregado");
+                EditarPersonas editarPersonas = new EditarPersonas();
+                editarPersonas.setVisible(true);
+                editarPersonas.iniciarVariables(VentanaPanel.this, con);
+                desactivarControles();
+                btnEliminar.setEnabled(false);
+                btnActualizar.setEnabled(false);
             }
         });
 //        Boton Eliminar
@@ -147,6 +147,7 @@ public class VentanaPanel extends JFrame{
                 modelo.removeRow(row);
                 tPersonas.setModel(modelo);
                 lblMensaje.setText("Producto eliminado");
+
                 btnEliminar.setEnabled(false);
                 btnActualizar.setEnabled(false);
             }
@@ -232,6 +233,17 @@ public class VentanaPanel extends JFrame{
             return false;
         }
         return true;
+    }
+
+    public void desactivarControles(){
+        btnAgregar.setEnabled(false);
+        tPersonas.setEnabled(false);
+    }
+
+
+   public void  activarControles(){
+        btnAgregar.setEnabled(true);
+        tPersonas.setEnabled(true);
     }
     public class MyTableModel extends DefaultTableModel {
         @Override
