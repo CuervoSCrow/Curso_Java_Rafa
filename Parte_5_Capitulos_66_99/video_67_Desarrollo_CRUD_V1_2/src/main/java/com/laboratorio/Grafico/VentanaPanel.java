@@ -32,8 +32,7 @@ public class VentanaPanel extends JFrame {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLayout(new BorderLayout(10,10));
 
-
-//        Crear Panel con tabla adentro
+//        Crear Panel Principal
         JPanel panelTabla = new JPanel();
         panelTabla.setLayout(new BorderLayout(10,10));
         panelTabla.setBorder(BorderFactory.createTitledBorder("Panel con Tabla"));
@@ -53,6 +52,9 @@ public class VentanaPanel extends JFrame {
         // Esto permite seleccionar filas pero no columnas
         tPersonas.setRowSelectionAllowed(true);
         tPersonas.setColumnSelectionAllowed(false);
+        //        Crea y retorna el JScrollPane que contiene la tabla
+        JScrollPane scroll = new JScrollPane(tPersonas);
+        scroll.setPreferredSize(new Dimension(500,450));
 
 
 //        Crea panel con 3 botones sur
@@ -67,7 +69,7 @@ public class VentanaPanel extends JFrame {
         panelBotones.add(btnEliminar);
         panelBotones.add(btnActualizar);
 
-//        Area de mensajes
+//        Área de mensajes
         lblMensaje = new JLabel("",SwingConstants.CENTER);
         lblMensaje.setBorder(BorderFactory.createEtchedBorder());
 
