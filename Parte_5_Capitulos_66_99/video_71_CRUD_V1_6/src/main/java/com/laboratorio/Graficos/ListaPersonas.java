@@ -13,10 +13,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.*;
 
-public class ListaPersonas extends JFrame{
+public class ListaPersonas extends JFrame {
     private ConexionMysql conMysql;
     private Connection con;
     private EditarPersona forma;
+    private int idPersona;
 
     private JLabel lblMensaje;
     private MyTableModel modelo;
@@ -30,12 +31,14 @@ public class ListaPersonas extends JFrame{
         initComponents();
 
     }
+
     public class MyTableModel extends DefaultTableModel {
         @Override
         public boolean isCellEditable(int row, int column){
             return false;
         }
     }
+
     public void initComponents(){
         setSize(600,400);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -122,13 +125,13 @@ public class ListaPersonas extends JFrame{
                     System.out.println("Fila Seleccionada: "+filaSeleccionada);
 
 //                    Obtener datos de la fila seleccionada
-                    Object id = modelo.getValueAt(filaSeleccionada,0);
+                     idPersona = (int) modelo.getValueAt(filaSeleccionada,0);
                     Object nombre = modelo.getValueAt(filaSeleccionada,1);
                     Object apellidos = modelo.getValueAt(filaSeleccionada,2);
                     Object fechaNacimiento = modelo.getValueAt(filaSeleccionada,3);
                     Object experiencia = modelo.getValueAt(filaSeleccionada,4);
 
-                    System.out.println("Id: "+id);
+                    System.out.println("Id: "+idPersona);
                     System.out.println("Nombre: "+nombre);
                     System.out.println("Apellidos: "+apellidos);
                     System.out.println("Fecha de Nacimiento: "+fechaNacimiento);
@@ -199,11 +202,28 @@ public class ListaPersonas extends JFrame{
         bAgregar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int row = tPersonas.getSelectedRow();
+                int id = (int) modelo.getValueAt(row,0);
+
+                desactivarBotones();
+                forma.iniciarFormulario(id);
+                bAgregar.setEnabled(false);
                 forma.setVisible(true);
+
+
+            }
+        });
+//        Boton Modificar
+        bModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                forma.setVisible(true);
+                forma.iniciarFormulario(idPersona);
                 bAgregar.setEnabled(false);
             }
         });
     }
+
     //    Carga los datos de la bd a la tabla
     private boolean cargarListaPersonas(){
         Statement statement;
@@ -242,12 +262,17 @@ public class ListaPersonas extends JFrame{
         bModificar.setEnabled(false);
         bAgregar.setEnabled(true);
     }
+
     //    Activa los botones Eliminar y Modificar
     public void activarBotones(){
 //        cargarListaPersonas();
         bEliminar.setEnabled(true);
         bModificar.setEnabled(true);
         bAgregar.setEnabled(true);
+    }
+
+    public void actualizarTabla(){
+        cargarListaPersonas();
     }
     //    Cierrra la aplicación
     private void cerrarAplicacion() {
