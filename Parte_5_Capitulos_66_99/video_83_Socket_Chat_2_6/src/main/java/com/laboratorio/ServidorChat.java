@@ -1,40 +1,45 @@
 package com.laboratorio;
 
+import com.laboratorio.cliente.Cliente;
+import com.laboratorio.servidor.Participante;
 import com.laboratorio.servidor.Servidor;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
+
 
 public class ServidorChat extends JFrame {
     private JTextArea tEventos;
     private Servidor servidor;
+    private JList<String> lParticipantes;
 
     public ServidorChat() {
         initComponents();
 
 
-        try{
-            servidor = new Servidor(this,2468);
+        try {
+            servidor = new Servidor(this, 2468);
             servidor.start();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             System.exit(1);
         }
     }
 
-    public void cerrarAplicacion(int modo){
+    public void cerrarAplicacion(int modo) {
         System.exit(modo);
     }
 
-    public void agregarEvento(String evento){
+    public void agregarEvento(String evento) {
         String texto = tEventos.getText();
-        texto+= evento+ '\n';
+        texto += evento + '\n';
         tEventos.setText(texto);
 //        eventosTextArea.setText(texto + evento + "\n");
     }
 
-    public void initComponents(){
+    public void initComponents() {
         // Configuración del JFrame
         setTitle("Chat Colectivo");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,11 +50,11 @@ public class ServidorChat extends JFrame {
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // ===== PANEL SUPERIOR (con "Participantes" en la parte superior derecha) =====
+        // ===== PANEL SUPERIOR (con "Participante" en la parte superior derecha) =====
         JPanel topPanel = new JPanel(new BorderLayout());
 
-        // Label "Participantes" alineado a la derecha
-        JLabel participantesLabel = new JLabel("Participantes");
+        // Label "Participante" alineado a la derecha
+        JLabel participantesLabel = new JLabel("Participante");
         participantesLabel.setFont(new Font("Arial", Font.BOLD, 14));
         participantesLabel.setHorizontalAlignment(SwingConstants.CENTER);
         topPanel.add(participantesLabel, BorderLayout.CENTER);
@@ -63,17 +68,15 @@ public class ServidorChat extends JFrame {
         splitPane.setContinuousLayout(true);
         splitPane.setBorder(null);
 
-        // ===== PANEL IZQUIERDO (Participantes) - 50% =====
+        // ===== PANEL IZQUIERDO (Participante) - 50% =====
         // Datos de ejemplo para participantes
-        String[] participantes = {"Juan Pérez", "María García", "Carlos López",
-                "Ana Martínez", "Luis Rodríguez", "Elena Sánchez",
-                "Roberto Díaz", "Laura Torres", "Javier Moreno"};
+        String[] participantes = {};
 
-        JList<String> participantesList = new JList<>(participantes);
-        participantesList.setFont(new Font("Arial", Font.PLAIN, 12));
-        participantesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lParticipantes = new JList<>();
+        lParticipantes.setFont(new Font("Arial", Font.PLAIN, 12));
+        lParticipantes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        JScrollPane participantesScroll = new JScrollPane(participantesList);
+        JScrollPane participantesScroll = new JScrollPane(lParticipantes);
         participantesScroll.setBorder(BorderFactory.createTitledBorder("Lista de participantes"));
 
         // ===== PANEL DERECHO (Eventos) - 50% =====
@@ -139,5 +142,13 @@ public class ServidorChat extends JFrame {
         add(mainPanel);
     }
 
+    public void refrescarLista(){
+        DefaultListModel<String> modelo= new DefaultListModel<>();
+        List<Participante> participantes = servidor.getParticipante();
 
+        for(Participante part : participantes){
+            modelo.addElement(part.getNombre());
+        }
+        lParticipantes.setModel(modelo);
+    }
 }
