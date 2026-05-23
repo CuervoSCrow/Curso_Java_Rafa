@@ -1,6 +1,5 @@
 package com.laboratorio;
 
-import com.laboratorio.cliente.Cliente;
 import com.laboratorio.servidor.Participante;
 import com.laboratorio.servidor.Servidor;
 
@@ -150,5 +149,10 @@ public class ServidorChat extends JFrame {
             modelo.addElement(part.getNombre());
         }
         lParticipantes.setModel(modelo);
+    }
+
+    public static void main(String[] args) {
+        ServidorChat servidor = new ServidorChat();
+        servidor.setVisible(true);
     }
 }
