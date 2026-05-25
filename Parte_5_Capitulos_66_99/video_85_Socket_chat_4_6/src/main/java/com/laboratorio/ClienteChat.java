@@ -1,6 +1,6 @@
 package com.laboratorio;
 
-import com.laboratorio.Cliente.Cliente;
+import com.laboratorio.cliente.Cliente;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,23 +8,26 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class ClienteChat extends JFrame{
-
     private Cliente cliente;
-    // Declaración de componentes
+//    Declaración de componentes
     private JTextField tNombre;
     private JButton bConectar;
-
+    DefaultListModel<String> modelo;
     private JTextArea tEventos;
+    JList<String> lParticipantes;
 
 
-    public ClienteChat() {
+    public ClienteChat(){
+        this.modelo = new DefaultListModel<>();
+        lParticipantes = new JList<>();
         initComponents();
-        this.cliente=null;
+        this.cliente = null;
+
     }
 
     public void initComponents() {
         // Declaración de componentes
-        JList<String> lParticipantes;
+
         JTextField tMensaje;
         JButton bEnviar;
         JButton bCerrar;
@@ -58,7 +61,7 @@ public class ClienteChat extends JFrame{
         // Panel izquierdo (Participantes)
         JPanel leftPanel = new JPanel(new BorderLayout(5, 5));
         JLabel lblParticipantes = new JLabel("Participantes:");
-        lParticipantes = new JList<>();
+
         lParticipantes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lParticipantes.setModel(new DefaultListModel<>()); // Sin contenido inicial
         JScrollPane scrollParticipantes = new JScrollPane(lParticipantes);
@@ -117,18 +120,17 @@ public class ClienteChat extends JFrame{
             tNombre.setEnabled(false);
             bConectar.setEnabled(false);
 //            Activar los demás controles
-            try{
-                cliente = new Cliente("127.0.0.1",2468,tNombre.getText());
+            try {
+                cliente = new Cliente("127.0.0.1", 2468, tNombre.getText(),this);
                 cliente.start();
-                System.out.println("usuario nuevo");
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 JOptionPane.showMessageDialog(ClienteChat.this,
                         "Error al establecer al conexión con el servidor: " + ex.getMessage(),
                         "Error de conexión",
                         JOptionPane.ERROR_MESSAGE);
                 System.exit(1);
                 return;
-              }
+            }
             agregarEvento("Se ha establecido la conexión");
         });
 
@@ -141,7 +143,7 @@ public class ClienteChat extends JFrame{
                     "¿Estás seguro que deseas salir?", "Confirmar salida",
                     JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                if(this.cliente!=null){
+                if (this.cliente != null) {
                     cliente.desconectar();
                 }
                 System.exit(0);
@@ -150,37 +152,34 @@ public class ClienteChat extends JFrame{
         tNombre.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-               if(tNombre.getText().length()>2){
-                   bConectar.setEnabled(true);
-               }else{
-                   bConectar.setEnabled(false);
-               }
+                if (tNombre.getText().length() > 2) {
+                    bConectar.setEnabled(true);
+                } else {
+                    bConectar.setEnabled(false);
+                }
             }
         });
-//        tNombre.getDocument().addDocumentListener(new DocumentListener() {
-//            @Override
-//            public void insertUpdate(DocumentEvent e) {
-//                bConectar.setEnabled(!tNombre.getText().trim().isEmpty());
-//            }
-//
-//            @Override
-//            public void removeUpdate(DocumentEvent e) {
-//                bConectar.setEnabled(!tNombre.getText().trim().isEmpty());
-//            }
-//
-//            @Override
-//            public void changedUpdate(DocumentEvent e) {
-//                bConectar.setEnabled(!tNombre.getText().trim().isEmpty());
-//            }
-//        });
-
-
     }
 
     public void agregarEvento(String mensaje){
         String texto= tEventos.getText();
-        texto+= mensaje+"\n";
+        texto+= mensaje + "\n";
         tEventos.setText(texto);
+    }
+    public void agregarParticipante(String nombre){
+        modelo.addElement(nombre);
+        lParticipantes.setModel(modelo);
+    }
+    public void cerrarVentana(int modo){
+        if(modo!=0){
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Ha ocurrido un error inesperado se cerrara l aplicación",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        System.exit(modo);
     }
 
     public static void main(String[] args) {
@@ -188,4 +187,3 @@ public class ClienteChat extends JFrame{
         clienteChat.setVisible(true);
     }
 }
-
