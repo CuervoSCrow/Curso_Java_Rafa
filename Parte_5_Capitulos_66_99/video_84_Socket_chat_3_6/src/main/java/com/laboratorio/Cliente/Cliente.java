@@ -14,6 +14,7 @@ public class Cliente extends Thread{
     private final Socket conexion;
     boolean seguir = true;
 
+
     public Cliente(String host, int puerto,String nombre)throws Exception {
         this.host = host;
         this.puerto = puerto;
