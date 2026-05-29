@@ -115,7 +115,9 @@ public class ClienteChat extends JFrame{
         add(mainPanel, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
 
-        // ========== EVENTOS VACÍOS (sin implementación) ==========
+        // ========== EVENTOS  ==========
+
+ // GESTIONA EL BOTON CONECTAR DE ClienteChat
         bConectar.addActionListener(e -> {
             tNombre.setEnabled(false);
             bConectar.setEnabled(false);
@@ -134,10 +136,12 @@ public class ClienteChat extends JFrame{
             agregarEvento("Se ha establecido la conexión");
         });
 
+//        GESTIONA EL BOTON ENVIAR DE ClienteChat
         bEnviar.addActionListener(e -> {
             // Evento vacío del botón Enviar
         });
 
+//  GESTIONA EL BOTON CERRAR DE ClienteChar
         bCerrar.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(ClienteChat.this,
                     "¿Estás seguro que deseas salir?", "Confirmar salida",
@@ -149,6 +153,8 @@ public class ClienteChat extends JFrame{
                 System.exit(0);
             }
         });
+
+//        Checa si el nombre de usuario tiene mas de 2 caracteres
         tNombre.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -166,6 +172,7 @@ public class ClienteChat extends JFrame{
         texto+= mensaje + "\n";
         tEventos.setText(texto);
     }
+
     public void agregarParticipante(String nombre){
         modelo.addElement(nombre);
         lParticipantes.setModel(modelo);
