@@ -13,17 +13,15 @@ public class Servidor extends Thread{
     private final int puerto;
     private final ServerSocket serverSocket;
     private boolean continuar;
-    private int nClientes;
+    private int nCliente;
     private List<Participante> participantes;
 
-    public Servidor(
-            ServidorChat servidorChat,
-            int puerto)throws Exception{
-        this.ventana = servidorChat;
+    public Servidor(ServidorChat ventana,int puerto) throws Exception {
         this.puerto = puerto;
+        this.ventana = ventana;
         this.serverSocket = new ServerSocket(puerto);
-        this.continuar = true;
-        this.nClientes = 0;
+        this.continuar=true;
+        this.nCliente=0;
         this.participantes = new ArrayList<>();
     }
 
@@ -35,72 +33,77 @@ public class Servidor extends Thread{
         return participantes;
     }
 
-    public void agregarParticipante(
-            Participante participante) {
-//        Avisar a otros usuario del nuevo participante
-        String mensaje,mensajeNuevo;
-
-        mensaje="CONECTADO\t" + participante.getNombre() + "\n";
-        for(Participante p:participantes){
-            p.getAtencionCliente().enviarMensaje(mensaje);
-            mensajeNuevo = "CONECTADO\t"+p.getNombre()+"\n";
-            p.getAtencionCliente().enviarMensaje(mensajeNuevo);
+    public void agregarParticipante(Participante participante) {
+//        Avisar a otros usuarios del nuevo participante
+        String mensaje, mensajeNuevo;
+        mensaje="CONECTADO\t"+participante.getNombre()+"\n";
+        for(Participante part: participantes){
+            part.getAtencionCliente().enviarMensajes(mensaje);
+            mensajeNuevo = "CONECTADO\t"+part.getNombre()+"\n";
+            participante.getAtencionCliente().enviarMensajes(mensajeNuevo);
         }
 
-//        Agregar participante a la lista
-        ventana.agregarEvento("Se ha conetado "+
-                participante.getNombre());
+        ventana.agregarEvento("Se ha conectado " + participante.getNombre());
         this.participantes.add(participante);
-//        refrescar el contenido de la lista
+
+//        Refrescar el contenido de la lista
         ventana.refrescarLista();
     }
 
-    public void quitarParticipante(
-            Participante participante) {
+    public void quitarParticipante(Participante participante) {
         int i;
-        for(i=participantes.size()-1;i>=0;i--){
+        for(i= participantes.size()-1;i>=0;i--){
             if(participantes.get(i).getId()==participante.getId()){
-                ventana.agregarEvento("Se ha desconectado "+
-                        participante.getNombre());
+                ventana.agregarEvento("Se ha desconectado " + participante.getNombre());
                 this.participantes.remove(i);
 
             }else{
-//                Avisar al usuario que el participante no esta disponible
+//                Avisar al usuario que el participante ya no esta disponible
             }
         }
+//        Refrescar la lista
         ventana.refrescarLista();
+
     }
 
-    public void cerrar(){
-        System.out.println("Cierre iniciado ...");
-        continuar=false;
+    public void cerrar() {
+        System.out.println("Cierre iniciado...");
+        continuar = false;
         try{
             serverSocket.close();
-        }catch(IOException ex){
-            System.out.println("Error al cerrar el servidor"+ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Se ha producido un error inesperado al cerrar el socket "+ex.getMessage());
+            return;
         }
         System.out.println("Cierre finalizado");
     }
 
     @Override
-    public void run(){
-        try{
-            Socket clienteSocket;
-            ventana.agregarEvento("Iniciando el servidor... ");
-            while(continuar){
-//                Esperar a que un cliente se conecte
-                clienteSocket = serverSocket.accept();
-                nClientes++;
+    public void run() {
+        Socket clienteSocket = new Socket();
 
-                AtencionCliente cliente =
-                        new AtencionCliente(
+        try{
+            ventana.agregarEvento("Iniciando servidor...");
+
+            while(continuar){
+
+//        Esperando la conexion con un cliente
+                clienteSocket = serverSocket.accept();
+                nCliente++;
+
+                AtencionCliente atencionCliente = new AtencionCliente(
                         this,
                         clienteSocket,
-                        nClientes);
-                cliente.start();
+                        nCliente);
+                atencionCliente.start();
             }
-        }catch(Exception ex){
 
+        } catch (IOException ex) {
+            if(continuar) {
+                System.out.println("Se ha producido un error inesperado " + ex.getMessage());
+                ventana.cerrarAplicacion(1);
+            }
+            return;
         }
     }
 }

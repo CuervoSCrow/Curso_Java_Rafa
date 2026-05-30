@@ -1,5 +1,7 @@
 package com.laboratorio.servidor;
 
+import com.laboratorio.servidor.AtencionCliente;
+
 public class Participante {
     private final int id;
     private final String nombre;
@@ -25,4 +27,6 @@ public class Participante {
     public AtencionCliente getAtencionCliente() {
         return atencionCliente;
     }
+
+
 }

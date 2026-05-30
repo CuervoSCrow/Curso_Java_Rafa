@@ -1,18 +1,20 @@
 package com.laboratorio;
 
 import com.laboratorio.cliente.Cliente;
+import com.laboratorio.cliente.Contacto;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public class ClienteChat extends JFrame {
     private JTextField tNombre;
     private JButton bConectar;
     private JTextArea tEventos;
     private JList<String> lParticipantes;
-    private DefaultListModel<String> modelo;
+    private final DefaultListModel<String> modelo;
 
     private Cliente cliente;
     public ClienteChat(){
@@ -166,8 +168,13 @@ public class ClienteChat extends JFrame {
         tEventos.setText(texto);
     }
 
-    public void agregarParticipante(String nombre){
-        modelo.addElement(nombre);
+    public void actualizarLista(){
+        List<Contacto> contactos = this.cliente.getContactos();
+        modelo.clear();
+        for(Contacto c : contactos){
+            modelo.addElement(c.getNombre());
+        }
+
         lParticipantes.setModel(modelo);
     }
 
