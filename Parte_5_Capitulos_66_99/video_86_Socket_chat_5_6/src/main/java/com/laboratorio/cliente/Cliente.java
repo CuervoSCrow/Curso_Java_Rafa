@@ -1,81 +1,142 @@
 package com.laboratorio.cliente;
 
+import com.laboratorio.ClienteChat;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Cliente {
+
+public class Cliente extends Thread{
+    private final ClienteChat ventana;
     private final String host;
     private final int puerto;
+    private final String nombre;
     private final Socket conexion;
+    private boolean seguir = true;
+    private List<Contacto> contactos;
 
-    public Cliente(String host, int puerto) throws Exception {
-        this.host = host;
+    public Cliente( ClienteChat ventana,
+                    String host,
+                    int puerto,
+                    String nombre)throws Exception {
+        this.ventana=ventana;
         this.puerto = puerto;
-        this.conexion = new Socket(host, puerto);
+        this.host = host;
+        this.nombre=nombre;
+        this.conexion = new Socket(host,puerto);
+        this.contactos = new ArrayList<>();
     }
 
-    public String getHost() {
-        return host;
-    }
-
-    public int getPuerto() {
+//    METODOS GET
+    public int getPuerto(){
         return puerto;
     }
 
-    public char mostrarMenu(){
-        Scanner teclado = new Scanner(System.in);
-
-        System.out.println("***************************************");
-        System.out.println(" Menu de Opciones:");
-        System.out.println(" 1. Enviar Saludo.");
-        System.out.println(" 2. Cerrar la conexión.");
-        System.out.println(" Indique la Opción: ");
-        System.out.println("***************************************");
-        return teclado.next().charAt(0);
+    public String getHost(){
+        return host;
     }
 
-    public void startCliente()throws Exception{
+    public List<Contacto> getContactos() {
+        return contactos;
+    }
+
+    public void desconectar(){
+        seguir=false;
+        try{
+            conexion.close();
+        }catch(IOException ex){
+            System.out.println("Error al cerrar la conexion: "+ex.getMessage());
+        }
+    }
+
+    @Override
+    public void run() {
         DataOutputStream salidaServidor;
         BufferedReader entradaServidor;
         String mensaje;
-        boolean seguir=true;
-        char operacion;
 
-//        Obtiene el flujo de entrada y salida
-        salidaServidor = new DataOutputStream(
-                conexion.getOutputStream());
-        entradaServidor = new BufferedReader(
-                new InputStreamReader(
-                        conexion.getInputStream()));
+        try{
+//        Obtiene los flujos de entrada y salida
+            salidaServidor = new DataOutputStream(
+                    conexion.getOutputStream());
+            entradaServidor = new BufferedReader(
+                    new InputStreamReader(
+                            conexion.getInputStream()));
 
-//        Se envia el mensaje al servidor
-        salidaServidor.writeUTF("Laboratorio Cuervo2 \t");
+//        Se envia mensaje al servidor
+            salidaServidor.writeUTF(
+                    nombre+"\n");
 
-//        Se recibe el mensaje del servidor
-        mensaje = entradaServidor.readLine();
-        System.out.println("Mensaje del servidor: "+mensaje);
+            do{
+//            Se ejecuta mientras haya  mensajes del cliente
+                while((mensaje = entradaServidor.readLine())!=null){
+                    procesarMensaje(mensaje.substring(2,mensaje.length()));
+                }
+            }while(seguir);
 
-        do{
-            operacion = mostrarMenu();
-            switch (operacion){
-                case '1':
-//                    Se envia un saludo al servidor
-                    salidaServidor.writeUTF("Saludos al servidor\n");
-                    break;
-                case '2':
-                    seguir = false;
-                    break;
-                default:
-                    System.out.println("Opcion inexistente");
-                    break;
+            entradaServidor.close();
+            salidaServidor.close();
+        }catch(Exception ex){
+            if(seguir==true){
+//                Avisar al la ventana cliente que se produjo un error
+                ventana.cerrarVentana(1);
             }
-        }while(seguir);
+        }
+    }
 
-        entradaServidor.close();
-        salidaServidor.close();
-        conexion.close();
+    private void procesarMensaje(String mensaje){
+        int pos;
+        String comando;
+        pos = mensaje.indexOf('\t');
+        if(pos<0){
+            System.out.println("Comando no valido");
+            return;
+        }
+        comando=mensaje.substring(0,pos);
+        if(comando.equalsIgnoreCase("CONECTADO")){
+            procesarComandoConectado(mensaje);
+        }else{
+            if(comando.equalsIgnoreCase("DESCONECTADO")){
+                procesarComandoDesconec(mensaje);
+            }
+        }
+    }
+
+    private void procesarComandoConectado(String comando){
+        int pos1,pos2,id;
+        String nomParticipante,str;
+
+        pos1=comando.indexOf('\t');
+        pos2=comando.indexOf('\t',pos1+1);
+        nomParticipante=comando.substring(pos1+1,pos2);
+        str=comando.substring(pos2+1,comando.length());
+        id=Integer.parseInt(str);
+        Contacto contacto = new Contacto(id,nomParticipante);
+        ventana.agregarEvento(nomParticipante+" esta conectado.");
+        contactos.add(contacto);
+        ventana.actualizarLista();
+
+    }
+
+    private void procesarComandoDesconec(String comando){
+        int pos,id, i;
+        String str;
+
+        pos=comando.indexOf('\t');
+        str=comando.substring(pos+1,comando.length());
+        id=Integer.parseInt(str);
+
+        for(i= contactos.size()-1;i>=0;i--){
+            if(contactos.get(i).getId()==id ){
+                contactos.remove(i);
+                break;
+            }
+            ventana.actualizarLista();
+        }
     }
 }

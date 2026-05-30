@@ -2,13 +2,16 @@ package com.laboratorio.servidor;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class AtencionCliente extends Thread {
+
     private final Servidor padre;
     private final Socket conexion;
     private final int nCliente;
+    DataOutputStream salidaCliente;
 
 
     public AtencionCliente(
@@ -18,11 +21,21 @@ public class AtencionCliente extends Thread {
         this.padre=padre;
         this.conexion = conexion;
         this.nCliente = nCliente;
+        this.salidaCliente = null;
+    }
+
+    public void enviarMensajes(String mensaje) {
+        if(salidaCliente!=null){
+            try {
+                salidaCliente.writeUTF(mensaje);
+            } catch (IOException e) {
+                System.out.println("Error Enviando mensaje: "+e.getMessage());
+            }
+        }
     }
 
     @Override
     public void run() {
-        DataOutputStream salidaCliente;
         BufferedReader entradaCliente;
         Participante participante;
         String mensaje, nombre;
@@ -52,8 +65,7 @@ public class AtencionCliente extends Thread {
             }
 
 //             Fin de la conexion cliente
-            System.out.println("Fin de la conexion cliente: " +
-                    nCliente);
+            padre.quitarParticipante(participante);
 
 //            Se cierra la conexion
             entradaCliente.close();

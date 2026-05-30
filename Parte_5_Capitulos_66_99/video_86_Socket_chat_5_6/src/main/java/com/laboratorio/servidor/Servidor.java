@@ -35,20 +35,34 @@ public class Servidor extends Thread{
 
     public void agregarParticipante(Participante participante) {
 //        Avisar a otros usuarios del nuevo participante
+        String mensaje, mensajeNuevo;
+        mensaje="CONECTADO\t"+participante.getNombre()+"\t"+
+                participante.getId()+"\n";
+        for(Participante part: participantes){
+            part.getAtencionCliente().enviarMensajes(mensaje);
+            mensajeNuevo = "CONECTADO\t"+part.getNombre()+"\t"+part.getId()+"\n";
+            participante.getAtencionCliente().enviarMensajes(mensajeNuevo);
+        }
 
         ventana.agregarEvento("Se ha conectado " + participante.getNombre());
         this.participantes.add(participante);
+
 //        Refrescar el contenido de la lista
         ventana.refrescarLista();
     }
 
     public void quitarParticipante(Participante participante) {
         int i;
+        Participante part;
+        String mensaje="DESCONECTADO\t"+participante.getId()+"\n";
         for(i= participantes.size()-1;i>=0;i--){
+            part = participantes.get(i);
             if(participantes.get(i).getId()==participante.getId()){
+                ventana.agregarEvento("Se ha desconectado " + participante.getNombre());
                 this.participantes.remove(i);
 
             }else{
+                part.getAtencionCliente().enviarMensajes("DESCONECTADO\t"+participante.getNombre()+"\n");
 //                Avisar al usuario que el participante ya no esta disponible
             }
         }
@@ -77,19 +91,21 @@ public class Servidor extends Thread{
             ventana.agregarEvento("Iniciando servidor...");
 
             while(continuar){
-                ventana.agregarEvento("Esperando un nuevo cliente...");
 
 //        Esperando la conexion con un cliente
                 clienteSocket = serverSocket.accept();
                 nCliente++;
 
-                AtencionCliente atencionCliente = new AtencionCliente( this,clienteSocket, nCliente);
+                AtencionCliente atencionCliente = new AtencionCliente(
+                        this,
+                        clienteSocket,
+                        nCliente);
                 atencionCliente.start();
             }
 
         } catch (IOException ex) {
             if(continuar) {
-                System.out.println("Se ha producido un error inesperado " + ex.getMessage());
+                System.out.println("Se ha producido un error inesperado en el Servidor " + ex.getMessage());
                 ventana.cerrarAplicacion(1);
             }
             return;

@@ -9,27 +9,20 @@ import java.awt.*;
 import java.util.List;
 
 public class ServidorChat extends JFrame {
-    private JTextArea tEventos;
     private Servidor servidor;
-    private JList<String> lParticipantes;
+    JTextArea tEventos;
+    JList<String> lParticipantes;
 
-    public ServidorChat(){
+    public ServidorChat() {
         initComponents();
-
-        try{
-            servidor = new Servidor(this, 2468);
-            servidor.start();
-        }catch(Exception e){
-            System.out.println("Error: "+e.getMessage());
-            System.exit(1);
-        }
+        conectarServidor();
     }
 
     public void initComponents(){
         // Configuración del JFrame
-        setTitle("Chat Colectivo");
+        setTitle("Servidor Chat");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 600);
+        setSize(600, 400);
         setLocationRelativeTo(null); // Centrar ventana
 
         // Crear el panel principal con BorderLayout
@@ -39,7 +32,7 @@ public class ServidorChat extends JFrame {
         // ===== PANEL SUPERIOR (con "Participante" en la parte superior derecha) =====
         JPanel topPanel = new JPanel(new BorderLayout());
 
-        // Label "Participante" alineado a la derecha
+        // Label Participante alinéado a la derecha
         JLabel participantesLabel = new JLabel("Participante");
         participantesLabel.setFont(new Font("Arial", Font.BOLD, 14));
         participantesLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -55,10 +48,9 @@ public class ServidorChat extends JFrame {
         splitPane.setBorder(null);
 
         // ===== PANEL IZQUIERDO (Participante) - 50% =====
-        // Datos de ejemplo para participantes
-        String[] participantes = {};
 
-        lParticipantes = new JList<>();
+
+        lParticipantes= new JList<>();
         lParticipantes.setFont(new Font("Arial", Font.PLAIN, 12));
         lParticipantes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -68,20 +60,13 @@ public class ServidorChat extends JFrame {
         // ===== PANEL DERECHO (Eventos) - 50% =====
         JPanel rightPanel = new JPanel(new BorderLayout(5, 5));
 
-        // Label "Eventos" en la parte superior del panel derecho
+        // Label Eventos en la parte superior del panel derecho
         JLabel eventosLabel = new JLabel("Eventos");
         eventosLabel.setFont(new Font("Arial", Font.BOLD, 14));
         eventosLabel.setHorizontalAlignment(SwingConstants.CENTER);
         rightPanel.add(eventosLabel, BorderLayout.NORTH);
 
         // JList para eventos (con scroll y deshabilitado)
-        String[] eventos = {"Usuario Juan se ha conectado",
-                "Nuevo mensaje en el chat",
-                "María ha salido del chat",
-                "Archivo compartido",
-                "Carlos se ha unido a la conversación",
-                "Ana ha enviado una imagen",
-                "El servidor se ha reiniciado"};
 
         tEventos = new JTextArea();
         tEventos.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -117,7 +102,6 @@ public class ServidorChat extends JFrame {
             if (confirm == JOptionPane.YES_OPTION) {
                 servidor.cerrar();
                 cerrarAplicacion(0);
-                System.exit(0);
             }
         });
 
@@ -126,30 +110,42 @@ public class ServidorChat extends JFrame {
 
         // Agregar el panel principal al frame
         add(mainPanel);
+    }
 
+    public void conectarServidor() {
+        System.out.println("Iniciando servidor...");
+        try{
+            servidor = new Servidor(this,2486);
+            servidor.start();
+        } catch (Exception e) {
+            System.out.println("Error al iniciar el servidor"+
+                    e.getMessage());
+            System.exit(1);
+        }
+    }
+
+    public void agregarEvento(String mensaje) {
+        String texto=tEventos.getText();
+        texto += mensaje+'\n';
+        tEventos.setText(texto);
     }
 
     public void cerrarAplicacion(int modo){
         System.exit(modo);
     }
 
-    public void agregarEvento(String evento){
-        String texto = tEventos.getText();
-        texto += evento + "\n";
-        tEventos.setText(texto);
-    }
-
     public void refrescarLista(){
-        DefaultListModel<String> modelo = new DefaultListModel();
-        List<Participante> participantes =servidor.getParticipantes();
-        for(Participante p : participantes){
-            modelo.addElement(p.getNombre());
+        DefaultListModel<String> modelo=new DefaultListModel<>();
+        List<Participante> participantes = servidor.getParticipantes();
+        for(Participante part: participantes){
+            modelo.addElement(part.getNombre());
         }
         lParticipantes.setModel(modelo);
     }
 
     public static void main(String[] args) {
-        ServidorChat servidorChat = new ServidorChat();
+        ServidorChat servidorChat= new ServidorChat();
         servidorChat.setVisible(true);
     }
+
 }
