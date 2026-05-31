@@ -9,11 +9,11 @@ public class Contacto {
         this.nombre = nombre;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
     public int getId() {
         return id;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 }

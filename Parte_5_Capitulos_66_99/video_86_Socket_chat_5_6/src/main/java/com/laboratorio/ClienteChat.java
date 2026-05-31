@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteChat extends JFrame {
@@ -14,7 +15,7 @@ public class ClienteChat extends JFrame {
     private JButton bConectar;
     private JTextArea tEventos;
     private JList<String> lParticipantes;
-    private final DefaultListModel<String> modelo;
+    private DefaultListModel<String> modelo;
 
     private Cliente cliente;
     public ClienteChat(){
@@ -171,7 +172,7 @@ public class ClienteChat extends JFrame {
     public void actualizarLista(){
         List<Contacto> contactos = this.cliente.getContactos();
         modelo.clear();
-        for(Contacto c : contactos){
+        for (Contacto c: contactos){
             modelo.addElement(c.getNombre());
         }
 
