@@ -36,8 +36,7 @@ public class Servidor extends Thread{
     public void agregarParticipante(Participante participante) {
 //        Avisar a otros usuarios del nuevo participante
         String mensaje, mensajeNuevo;
-        mensaje="CONECTADO\t"+participante.getNombre()+"\t"+
-                participante.getId()+"\n";
+        mensaje="CONECTADO\t"+participante.getNombre()+"\t"+participante.getId()+"\n";
         for(Participante part: participantes){
             part.getAtencionCliente().enviarMensajes(mensaje);
             mensajeNuevo = "CONECTADO\t"+part.getNombre()+"\t"+part.getId()+"\n";
@@ -56,14 +55,14 @@ public class Servidor extends Thread{
         Participante part;
         String mensaje="DESCONECTADO\t"+participante.getId()+"\n";
         for(i= participantes.size()-1;i>=0;i--){
-            part = participantes.get(i);
-            if(participantes.get(i).getId()==participante.getId()){
+            part=participantes.get(i);
+            if(part.getId()==participante.getId()){
                 ventana.agregarEvento("Se ha desconectado " + participante.getNombre());
                 this.participantes.remove(i);
 
             }else{
-                part.getAtencionCliente().enviarMensajes("DESCONECTADO\t"+participante.getNombre()+"\n");
 //                Avisar al usuario que el participante ya no esta disponible
+                part.getAtencionCliente().enviarMensajes(mensaje);
             }
         }
 //        Refrescar la lista
@@ -105,7 +104,7 @@ public class Servidor extends Thread{
 
         } catch (IOException ex) {
             if(continuar) {
-                System.out.println("Se ha producido un error inesperado en el Servidor " + ex.getMessage());
+                System.out.println("Se ha producido un error inesperado " + ex.getMessage());
                 ventana.cerrarAplicacion(1);
             }
             return;

@@ -17,13 +17,13 @@ public class Cliente extends Thread{
     private final int puerto;
     private final String nombre;
     private final Socket conexion;
+    private final List<Contacto> contactos;
     private boolean seguir = true;
-    private List<Contacto> contactos;
 
-    public Cliente( ClienteChat ventana,
-                    String host,
-                    int puerto,
-                    String nombre)throws Exception {
+    public Cliente(ClienteChat ventana,
+                   String host,
+                   int puerto,
+                   String nombre)throws Exception {
         this.ventana=ventana;
         this.puerto = puerto;
         this.host = host;
@@ -41,7 +41,7 @@ public class Cliente extends Thread{
         return host;
     }
 
-    public List<Contacto> getContactos() {
+    public List<Contacto> getContactos(){
         return contactos;
     }
 
@@ -98,45 +98,45 @@ public class Cliente extends Thread{
             return;
         }
         comando=mensaje.substring(0,pos);
+
         if(comando.equalsIgnoreCase("CONECTADO")){
             procesarComandoConectado(mensaje);
         }else{
             if(comando.equalsIgnoreCase("DESCONECTADO")){
-                procesarComandoDesconec(mensaje);
+                procesarComandoDesconectado(mensaje);
             }
         }
+
     }
 
     private void procesarComandoConectado(String comando){
         int pos1,pos2,id;
         String nomParticipante,str;
 
-        pos1=comando.indexOf('\t');
-        pos2=comando.indexOf('\t',pos1+1);
-        nomParticipante=comando.substring(pos1+1,pos2);
-        str=comando.substring(pos2+1,comando.length());
-        id=Integer.parseInt(str);
-        Contacto contacto = new Contacto(id,nomParticipante);
-        ventana.agregarEvento(nomParticipante+" esta conectado.");
-        contactos.add(contacto);
-        ventana.actualizarLista();
+        pos1 = comando.indexOf('\t');
+        pos2 = comando.indexOf('\t',pos1+1);
+        nomParticipante = comando.substring(pos1+1,pos2);
+        str = comando.substring(pos2+1,comando.length());
+        id = Integer.parseInt(str);
+        ventana.agregarEvento(nombre+" esta conectado.");
+        Contacto c = new Contacto(id,nomParticipante);
+        contactos.add(c);
 
+        ventana.actualizarLista();
     }
 
-    private void procesarComandoDesconec(String comando){
-        int pos,id, i;
+    private void procesarComandoDesconectado(String comando){
+        int pos,id,i;
         String str;
-
-        pos=comando.indexOf('\t');
-        str=comando.substring(pos+1,comando.length());
+        pos = comando.indexOf('\t');
+        str = comando.substring(pos+1,comando.length());
         id=Integer.parseInt(str);
-
         for(i= contactos.size()-1;i>=0;i--){
-            if(contactos.get(i).getId()==id ){
+            if(contactos.get(i).getId()==id){
                 contactos.remove(i);
                 break;
             }
-            ventana.actualizarLista();
         }
+        ventana.actualizarLista();
     }
 }
