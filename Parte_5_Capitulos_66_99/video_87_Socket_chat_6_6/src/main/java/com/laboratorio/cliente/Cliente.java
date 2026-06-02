@@ -58,6 +58,7 @@ public class Cliente extends Thread{
     }
 
     public void enviarMensaje(int pos,String mensaje){
+
         if(salidaServidor==null){
             return;
         }
@@ -68,8 +69,72 @@ public class Cliente extends Thread{
             salidaServidor.writeUTF(comando);
         }catch(IOException ex){
             System.out.println("Error al enviar mensaje: "+ex.getMessage());
+            ventana.mensajeError("No se pudo enviar el mensaje");
         }
 
+
+    }
+
+    private void procesarComandoConectado(String comando){
+        int pos1,pos2,id;
+        String nomParticipante,str;
+
+        pos1 = comando.indexOf('\t');
+        pos2 = comando.indexOf('\t',pos1+1);
+        nomParticipante = comando.substring(pos1+1,pos2);
+        str = comando.substring(pos2+1,comando.length());
+        id = Integer.parseInt(str);
+        ventana.agregarEvento(nombre+" esta conectado.");
+        Contacto c = new Contacto(id,nomParticipante);
+        contactos.add(c);
+
+        ventana.actualizarLista();
+    }
+
+    private void procesarComandoDesconectado(String comando){
+        int pos,id,i;
+        String str;
+        pos = comando.indexOf('\t');
+        str = comando.substring(pos+1,comando.length());
+        id=Integer.parseInt(str);
+        for(i= contactos.size()-1;i>=0;i--){
+            if(contactos.get(i).getId()==id){
+                contactos.remove(i);
+                break;
+            }
+        }
+        ventana.actualizarLista();
+    }
+
+    private void procesarComandoMensaje(String comando){
+        int pos;
+        String mensaje;
+        pos = comando.indexOf('\t');
+        mensaje = comando.substring(pos+1,comando.length());
+        ventana.agregarEvento(mensaje);
+    }
+
+    private void procesarMensaje(String mensaje){
+        int pos;
+        String comando;
+        pos = mensaje.indexOf('\t');
+        if(pos<0){
+            System.out.println("Comando no valido");
+            return;
+        }
+        comando=mensaje.substring(0,pos);
+
+        if(comando.equalsIgnoreCase("CONECTADO")){
+            procesarComandoConectado(mensaje);
+        }else{
+            if(comando.equalsIgnoreCase("DESCONECTADO")){
+                procesarComandoDesconectado(mensaje);
+            }else{
+                if(comando.equalsIgnoreCase("MENSAJE")){
+                    procesarComandoMensaje(mensaje);
+                }
+            }
+        }
 
     }
 
@@ -106,56 +171,5 @@ public class Cliente extends Thread{
                 ventana.cerrarVentana(1);
             }
         }
-    }
-
-    private void procesarMensaje(String mensaje){
-        int pos;
-        String comando;
-        pos = mensaje.indexOf('\t');
-        if(pos<0){
-            System.out.println("Comando no valido");
-            return;
-        }
-        comando=mensaje.substring(0,pos);
-
-        if(comando.equalsIgnoreCase("CONECTADO")){
-            procesarComandoConectado(mensaje);
-        }else{
-            if(comando.equalsIgnoreCase("DESCONECTADO")){
-                procesarComandoDesconectado(mensaje);
-            }
-        }
-
-    }
-
-    private void procesarComandoConectado(String comando){
-        int pos1,pos2,id;
-        String nomParticipante,str;
-
-        pos1 = comando.indexOf('\t');
-        pos2 = comando.indexOf('\t',pos1+1);
-        nomParticipante = comando.substring(pos1+1,pos2);
-        str = comando.substring(pos2+1,comando.length());
-        id = Integer.parseInt(str);
-        ventana.agregarEvento(nombre+" esta conectado.");
-        Contacto c = new Contacto(id,nomParticipante);
-        contactos.add(c);
-
-        ventana.actualizarLista();
-    }
-
-    private void procesarComandoDesconectado(String comando){
-        int pos,id,i;
-        String str;
-        pos = comando.indexOf('\t');
-        str = comando.substring(pos+1,comando.length());
-        id=Integer.parseInt(str);
-        for(i= contactos.size()-1;i>=0;i--){
-            if(contactos.get(i).getId()==id){
-                contactos.remove(i);
-                break;
-            }
-        }
-        ventana.actualizarLista();
     }
 }

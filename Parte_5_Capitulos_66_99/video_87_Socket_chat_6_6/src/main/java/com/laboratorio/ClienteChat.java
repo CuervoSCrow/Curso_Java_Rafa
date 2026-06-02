@@ -199,7 +199,8 @@ public class ClienteChat extends JFrame {
                 return;
             }
             cliente.enviarMensaje(sel,str);
-
+            tMensaje.setText("");
+            bEnviar.setEnabled(false);
         });
     }
 
@@ -220,7 +221,12 @@ public class ClienteChat extends JFrame {
     }
 
     public void mensajeError(String mensaje){
-        JOptionPane.showMessageDialog();
+        JOptionPane.showMessageDialog(
+                null,
+                mensaje,
+                "Error de conexión",
+                JOptionPane.ERROR_MESSAGE
+        );
     }
 
     public void cerrarVentana(int modo){
