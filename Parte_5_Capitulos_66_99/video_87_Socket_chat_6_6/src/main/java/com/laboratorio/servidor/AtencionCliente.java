@@ -1,5 +1,7 @@
 package com.laboratorio.servidor;
 
+import com.laboratorio.cliente.Contacto;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,6 +14,7 @@ public class AtencionCliente extends Thread {
     private final Socket conexion;
     private final int nCliente;
     DataOutputStream salidaCliente;
+    private String nombre;
 
 
     public AtencionCliente(
@@ -38,7 +41,7 @@ public class AtencionCliente extends Thread {
     public void run() {
         BufferedReader entradaCliente;
         Participante participante;
-        String mensaje, nombre;
+        String mensaje;
         try {
 //            Se obtienen los flujos de entrada y salida
             salidaCliente= new DataOutputStream(
@@ -60,8 +63,8 @@ public class AtencionCliente extends Thread {
 
 //            Se ejecuta mientras haya mensajes del cliente
             while((mensaje= entradaCliente.readLine())!=null){
-                System.out.println("Mensaje cliente: " +
-                        nCliente+" : " + mensaje);
+
+                procesarMensaje(mensaje.substring(2,mensaje.length()));
             }
 
 //             Fin de la conexion cliente
@@ -76,4 +79,34 @@ public class AtencionCliente extends Thread {
             System.out.println("Error: "+e.getMessage());
         }
     }
+
+    private void procesarMensaje(String mensaje) {
+        int pos;
+        String comando;
+        pos = mensaje.indexOf('\t');
+        if (pos < 0) {
+            System.out.println("Comando no valido");
+            return;
+        }
+        comando = mensaje.substring(0, pos);
+
+        if (comando.equalsIgnoreCase("MENSAJE")) {
+            procesarComandoMensaje(mensaje);
+        }
+    }
+
+    private void procesarComandoMensaje(String comando) {
+        int pos1,pos2,id;
+        String mensaje,str;
+
+        pos1 = comando.indexOf('\t');
+        pos2 = comando.indexOf('\t',pos1+1);
+        str = comando.substring(pos1+1,pos2);
+        id=Integer.parseInt(str);
+        mensaje= comando.substring(pos2+1,comando.length());
+        padre.enviarMensaje(id,mensaje,nombre);
+
+    }
+
+
 }

@@ -82,6 +82,19 @@ public class Servidor extends Thread{
         System.out.println("Cierre finalizado");
     }
 
+    public void enviarMensaje(int id,
+                              String mensaje,
+                              String emisor){
+        for(Participante p : participantes){
+            if(p.getId() == id){
+                String comando ="MENSAJE\t"+emisor+" dice: "+mensaje+"\n";
+                p.getAtencionCliente().enviarMensajes(comando);
+                ventana.agregarEvento(emisor+" dice: "+mensaje);
+                break;
+            }
+        }
+    }
+
     @Override
     public void run() {
         Socket clienteSocket = new Socket();
