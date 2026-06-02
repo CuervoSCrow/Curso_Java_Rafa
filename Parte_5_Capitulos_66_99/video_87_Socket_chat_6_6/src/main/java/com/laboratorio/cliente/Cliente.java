@@ -19,6 +19,7 @@ public class Cliente extends Thread{
     private final Socket conexion;
     private final List<Contacto> contactos;
     private boolean seguir = true;
+    private DataOutputStream salidaServidor;
 
     public Cliente(
             ClienteChat ventana,
@@ -31,6 +32,7 @@ public class Cliente extends Thread{
         this.nombre=nombre;
         this.conexion = new Socket(host,puerto);
         this.contactos = new ArrayList<>();
+        this.salidaServidor = null;
     }
 
 //    METODOS GET
@@ -55,9 +57,25 @@ public class Cliente extends Thread{
         }
     }
 
+    public void enviarMensaje(int pos,String mensaje){
+        if(salidaServidor==null){
+            return;
+        }
+        Contacto c = contactos.get(pos);
+        int id = c.getId();
+        String comando="MENSAJE\t"+id+"\t"+mensaje+"\n";
+        try {
+            salidaServidor.writeUTF(comando);
+        }catch(IOException ex){
+            System.out.println("Error al enviar mensaje: "+ex.getMessage());
+        }
+
+
+    }
+
     @Override
     public void run() {
-        DataOutputStream salidaServidor;
+
         BufferedReader entradaServidor;
         String mensaje;
 
