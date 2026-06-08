@@ -6,7 +6,8 @@ import com.laboratorio.peticion.ListaPeticiones;
 import com.laboratorio.peticion.PeticionAPI;
 
 public class Main {
-    public static EventosAPIListener eventos= new EventosAPIListener() {
+    public static EventosAPIListener eventos=
+            new EventosAPIListener() {
         @Override
         public void procesarEventoAPI(EventoAPI evento) {
             System.out.println("[APP] Manejo de un evento ");

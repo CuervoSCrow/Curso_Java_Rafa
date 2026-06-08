@@ -5,7 +5,7 @@ import com.laboratorio.peticion.PeticionAPI;
 import java.util.EventObject;
 
 public class EventoAPI extends EventObject {
-    private PeticionAPI peticionAPI;
+    private PeticionAPI peticion;
     /**
      * Constructs a prototypical Event.
      *
@@ -14,10 +14,10 @@ public class EventoAPI extends EventObject {
      */
     public EventoAPI(Object source, PeticionAPI peticionAPI) {
         super(source);
-        this.peticionAPI = peticionAPI;
+        this.peticion = peticionAPI;
     }
 
-    public PeticionAPI  getPeticion() {
-        return peticionAPI;
+    public PeticionAPI getPeticion() {
+        return peticion;
     }
 }
