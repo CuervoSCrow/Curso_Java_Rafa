@@ -1,0 +1,83 @@
+2026-06-09 22:35:53 CST INFO  com.laboratorio.eventos.ListaPeticiones 32 addPeticion - [HILO] Se ha agregado la peticion id: 1
+2026-06-09 22:35:53 CST INFO  com.laboratorio.eventos.ListaPeticiones 32 addPeticion - [HILO] Se ha agregado la peticion id: 2
+2026-06-09 22:35:53 CST INFO  com.laboratorio.eventos.ListaPeticiones 32 addPeticion - [HILO] Se ha agregado la peticion id: 3
+2026-06-09 22:35:53 CST INFO  com.laboratorio.eventos.ListaPeticiones 32 addPeticion - [HILO] Se ha agregado la peticion id: 4
+2026-06-09 22:35:53 CST INFO  com.laboratorio.eventos.ListaPeticiones 32 addPeticion - [HILO] Se ha agregado la peticion id: 5
+2026-06-09 22:35:53 CST INFO  com.laboratorio.eventos.ListaPeticiones 32 addPeticion - [HILO] Se ha agregado la peticion id: 6
+2026-06-09 22:35:54 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 1
+2026-06-09 22:35:55 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 2
+2026-06-09 22:35:56 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 3
+2026-06-09 22:35:57 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 4
+2026-06-09 22:35:58 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 5
+2026-06-09 22:35:59 CST INFO  com.laboratorio.api.FrankFurteAPI 37 ejecutar - Llamada realizada correctamente [LATEST]
+2026-06-09 22:35:59 CST INFO  com.laboratorio.eventos.ListaPeticiones 63 generarEventoLatest - [HILO] Lanzar el evento LATEST de la peticion Id: 1
+2026-06-09 22:35:59 CST INFO  com.laboratorio.peticion.PeticionLatest 17 procesarEventoLatest - [APP-LATEST] Manejo de un evento LATEST
+2026-06-09 22:35:59 CST INFO  com.laboratorio.peticion.PeticionLatest 18 procesarEventoLatest - [APP-LATEST] Respuesta de la petición Id: 1 : {"amount":1.0,"base":"EUR","date":"2026-06-09","rates":{"AUD":1.6391,"BRL":5.9751,"CAD":1.6111,"CHF":0.9206,"CNY":7.8367,"CZK":24.168,"DKK":7.4742,"GBP":0.8634,"HKD":9.0691,"HUF":355.33,"IDR":20773.82,"ILS":3.4077,"INR":110.3495,"ISK":143.6,"JPY":185.35,"KRW":1765.44,"MXN":20.1157,"MYR":4.6998,"NOK":10.9345,"NZD":1.981,"PHP":71.157,"PLN":4.2373,"RON":5.2381,"SEK":10.885,"SGD":1.4873,"THB":37.994,"TRY":53.372,"USD":1.1573,"ZAR":19.0416}}
+2026-06-09 22:35:59 CST INFO  com.laboratorio.eventos.ListaPeticiones 63 generarEventoLatest - [HILO] Lanzar el evento LATEST de la peticion Id: 1
+2026-06-09 22:35:59 CST INFO  com.laboratorio.peticion.PeticionCurrencies 16 procesarEventoLatest - [APP-CURRENCIES] no hacer nada
+2026-06-09 22:35:59 CST INFO  com.laboratorio.eventos.ListaPeticiones 56 procesarPeticionLatest - [HILO] Se ha procesado la peticion LATEST con id: 1
+2026-06-09 22:35:59 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 6
+2026-06-09 22:36:00 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 7
+2026-06-09 22:36:01 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 8
+2026-06-09 22:36:02 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 9
+2026-06-09 22:36:03 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 10
+2026-06-09 22:36:04 CST INFO  com.laboratorio.api.FrankFurteAPI 37 ejecutar - Llamada realizada correctamente [CURRENCIES]
+2026-06-09 22:36:04 CST INFO  com.laboratorio.eventos.ListaPeticiones 88 generarEventoCurrencies - [HILO] Lanzar el evento CURRENCIES de la peticion Id: 2
+2026-06-09 22:36:04 CST INFO  com.laboratorio.peticion.PeticionLatest 25 procesarEventoCurrencies - [APP-LATEST] no hacer nada
+2026-06-09 22:36:04 CST INFO  com.laboratorio.eventos.ListaPeticiones 88 generarEventoCurrencies - [HILO] Lanzar el evento CURRENCIES de la peticion Id: 2
+2026-06-09 22:36:04 CST INFO  com.laboratorio.peticion.PeticionCurrencies 21 procesarEventoCurrencies - [APP-CURRENCIES] Manejo de un evento CURRENCIES
+2026-06-09 22:36:04 CST INFO  com.laboratorio.peticion.PeticionCurrencies 22 procesarEventoCurrencies - [APP-CURRENCIES] Respuesta de la petición Id: 2 : {"AUD":"Australian Dollar","BRL":"Brazilian Real","CAD":"Canadian Dollar","CHF":"Swiss Franc","CNY":"Chinese Renminbi Yuan","CZK":"Czech Koruna","DKK":"Danish Krone","EUR":"Euro","GBP":"British Pound","HKD":"Hong Kong Dollar","HUF":"Hungarian Forint","IDR":"Indonesian Rupiah","ILS":"Israeli New Shekel","INR":"Indian Rupee","ISK":"Icelandic Króna","JPY":"Japanese Yen","KRW":"South Korean Won","MXN":"Mexican Peso","MYR":"Malaysian Ringgit","NOK":"Norwegian Krone","NZD":"New Zealand Dollar","PHP":"Philippine Peso","PLN":"Polish Złoty","RON":"Romanian Leu","SEK":"Swedish Krona","SGD":"Singapore Dollar","THB":"Thai Baht","TRY":"Turkish Lira","USD":"United States Dollar","ZAR":"South African Rand"}
+2026-06-09 22:36:04 CST INFO  com.laboratorio.eventos.ListaPeticiones 81 procesarPeticionCurrencies - [HILO] Se ha procesado la petición CURRENCIES con Id: 2
+2026-06-09 22:36:04 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 11
+2026-06-09 22:36:05 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 12
+2026-06-09 22:36:06 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 13
+2026-06-09 22:36:07 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 14
+2026-06-09 22:36:08 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 15
+2026-06-09 22:36:09 CST INFO  com.laboratorio.api.FrankFurteAPI 37 ejecutar - Llamada realizada correctamente [LATEST]
+2026-06-09 22:36:09 CST INFO  com.laboratorio.eventos.ListaPeticiones 63 generarEventoLatest - [HILO] Lanzar el evento LATEST de la peticion Id: 3
+2026-06-09 22:36:09 CST INFO  com.laboratorio.peticion.PeticionLatest 17 procesarEventoLatest - [APP-LATEST] Manejo de un evento LATEST
+2026-06-09 22:36:09 CST INFO  com.laboratorio.peticion.PeticionLatest 18 procesarEventoLatest - [APP-LATEST] Respuesta de la petición Id: 3 : {"amount":1.0,"base":"EUR","date":"2026-06-09","rates":{"AUD":1.6391,"BRL":5.9751,"CAD":1.6111,"CHF":0.9206,"CNY":7.8367,"CZK":24.168,"DKK":7.4742,"GBP":0.8634,"HKD":9.0691,"HUF":355.33,"IDR":20773.82,"ILS":3.4077,"INR":110.3495,"ISK":143.6,"JPY":185.35,"KRW":1765.44,"MXN":20.1157,"MYR":4.6998,"NOK":10.9345,"NZD":1.981,"PHP":71.157,"PLN":4.2373,"RON":5.2381,"SEK":10.885,"SGD":1.4873,"THB":37.994,"TRY":53.372,"USD":1.1573,"ZAR":19.0416}}
+2026-06-09 22:36:09 CST INFO  com.laboratorio.eventos.ListaPeticiones 63 generarEventoLatest - [HILO] Lanzar el evento LATEST de la peticion Id: 3
+2026-06-09 22:36:09 CST INFO  com.laboratorio.peticion.PeticionCurrencies 16 procesarEventoLatest - [APP-CURRENCIES] no hacer nada
+2026-06-09 22:36:09 CST INFO  com.laboratorio.eventos.ListaPeticiones 56 procesarPeticionLatest - [HILO] Se ha procesado la peticion LATEST con id: 3
+2026-06-09 22:36:09 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 16
+2026-06-09 22:36:10 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 17
+2026-06-09 22:36:11 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 18
+2026-06-09 22:36:12 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 19
+2026-06-09 22:36:13 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 20
+2026-06-09 22:36:14 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 21
+2026-06-09 22:36:14 CST INFO  com.laboratorio.api.FrankFurteAPI 37 ejecutar - Llamada realizada correctamente [LATEST]
+2026-06-09 22:36:14 CST INFO  com.laboratorio.eventos.ListaPeticiones 63 generarEventoLatest - [HILO] Lanzar el evento LATEST de la peticion Id: 4
+2026-06-09 22:36:14 CST INFO  com.laboratorio.peticion.PeticionLatest 17 procesarEventoLatest - [APP-LATEST] Manejo de un evento LATEST
+2026-06-09 22:36:14 CST INFO  com.laboratorio.peticion.PeticionLatest 18 procesarEventoLatest - [APP-LATEST] Respuesta de la petición Id: 4 : {"amount":1.0,"base":"EUR","date":"2026-06-09","rates":{"AUD":1.6391,"BRL":5.9751,"CAD":1.6111,"CHF":0.9206,"CNY":7.8367,"CZK":24.168,"DKK":7.4742,"GBP":0.8634,"HKD":9.0691,"HUF":355.33,"IDR":20773.82,"ILS":3.4077,"INR":110.3495,"ISK":143.6,"JPY":185.35,"KRW":1765.44,"MXN":20.1157,"MYR":4.6998,"NOK":10.9345,"NZD":1.981,"PHP":71.157,"PLN":4.2373,"RON":5.2381,"SEK":10.885,"SGD":1.4873,"THB":37.994,"TRY":53.372,"USD":1.1573,"ZAR":19.0416}}
+2026-06-09 22:36:14 CST INFO  com.laboratorio.eventos.ListaPeticiones 63 generarEventoLatest - [HILO] Lanzar el evento LATEST de la peticion Id: 4
+2026-06-09 22:36:14 CST INFO  com.laboratorio.peticion.PeticionCurrencies 16 procesarEventoLatest - [APP-CURRENCIES] no hacer nada
+2026-06-09 22:36:14 CST INFO  com.laboratorio.eventos.ListaPeticiones 56 procesarPeticionLatest - [HILO] Se ha procesado la peticion LATEST con id: 4
+2026-06-09 22:36:15 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 22
+2026-06-09 22:36:16 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 23
+2026-06-09 22:36:17 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 24
+2026-06-09 22:36:18 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 25
+2026-06-09 22:36:19 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 26
+2026-06-09 22:36:19 CST INFO  com.laboratorio.api.FrankFurteAPI 37 ejecutar - Llamada realizada correctamente [CURRENCIES]
+2026-06-09 22:36:19 CST INFO  com.laboratorio.eventos.ListaPeticiones 88 generarEventoCurrencies - [HILO] Lanzar el evento CURRENCIES de la peticion Id: 5
+2026-06-09 22:36:19 CST INFO  com.laboratorio.peticion.PeticionLatest 25 procesarEventoCurrencies - [APP-LATEST] no hacer nada
+2026-06-09 22:36:19 CST INFO  com.laboratorio.eventos.ListaPeticiones 88 generarEventoCurrencies - [HILO] Lanzar el evento CURRENCIES de la peticion Id: 5
+2026-06-09 22:36:19 CST INFO  com.laboratorio.peticion.PeticionCurrencies 21 procesarEventoCurrencies - [APP-CURRENCIES] Manejo de un evento CURRENCIES
+2026-06-09 22:36:19 CST INFO  com.laboratorio.peticion.PeticionCurrencies 22 procesarEventoCurrencies - [APP-CURRENCIES] Respuesta de la petición Id: 5 : {"AUD":"Australian Dollar","BRL":"Brazilian Real","CAD":"Canadian Dollar","CHF":"Swiss Franc","CNY":"Chinese Renminbi Yuan","CZK":"Czech Koruna","DKK":"Danish Krone","EUR":"Euro","GBP":"British Pound","HKD":"Hong Kong Dollar","HUF":"Hungarian Forint","IDR":"Indonesian Rupiah","ILS":"Israeli New Shekel","INR":"Indian Rupee","ISK":"Icelandic Króna","JPY":"Japanese Yen","KRW":"South Korean Won","MXN":"Mexican Peso","MYR":"Malaysian Ringgit","NOK":"Norwegian Krone","NZD":"New Zealand Dollar","PHP":"Philippine Peso","PLN":"Polish Złoty","RON":"Romanian Leu","SEK":"Swedish Krona","SGD":"Singapore Dollar","THB":"Thai Baht","TRY":"Turkish Lira","USD":"United States Dollar","ZAR":"South African Rand"}
+2026-06-09 22:36:19 CST INFO  com.laboratorio.eventos.ListaPeticiones 81 procesarPeticionCurrencies - [HILO] Se ha procesado la petición CURRENCIES con Id: 5
+2026-06-09 22:36:20 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 27
+2026-06-09 22:36:21 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 28
+2026-06-09 22:36:22 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 29
+2026-06-09 22:36:23 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 30
+2026-06-09 22:36:24 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 31
+2026-06-09 22:36:25 CST INFO  com.laboratorio.api.FrankFurteAPI 37 ejecutar - Llamada realizada correctamente [CURRENCIES]
+2026-06-09 22:36:25 CST INFO  com.laboratorio.eventos.ListaPeticiones 88 generarEventoCurrencies - [HILO] Lanzar el evento CURRENCIES de la peticion Id: 6
+2026-06-09 22:36:25 CST INFO  com.laboratorio.peticion.PeticionLatest 25 procesarEventoCurrencies - [APP-LATEST] no hacer nada
+2026-06-09 22:36:25 CST INFO  com.laboratorio.eventos.ListaPeticiones 88 generarEventoCurrencies - [HILO] Lanzar el evento CURRENCIES de la peticion Id: 6
+2026-06-09 22:36:25 CST INFO  com.laboratorio.peticion.PeticionCurrencies 21 procesarEventoCurrencies - [APP-CURRENCIES] Manejo de un evento CURRENCIES
+2026-06-09 22:36:25 CST INFO  com.laboratorio.peticion.PeticionCurrencies 22 procesarEventoCurrencies - [APP-CURRENCIES] Respuesta de la petición Id: 6 : {"AUD":"Australian Dollar","BRL":"Brazilian Real","CAD":"Canadian Dollar","CHF":"Swiss Franc","CNY":"Chinese Renminbi Yuan","CZK":"Czech Koruna","DKK":"Danish Krone","EUR":"Euro","GBP":"British Pound","HKD":"Hong Kong Dollar","HUF":"Hungarian Forint","IDR":"Indonesian Rupiah","ILS":"Israeli New Shekel","INR":"Indian Rupee","ISK":"Icelandic Króna","JPY":"Japanese Yen","KRW":"South Korean Won","MXN":"Mexican Peso","MYR":"Malaysian Ringgit","NOK":"Norwegian Krone","NZD":"New Zealand Dollar","PHP":"Philippine Peso","PLN":"Polish Złoty","RON":"Romanian Leu","SEK":"Swedish Krona","SGD":"Singapore Dollar","THB":"Thai Baht","TRY":"Turkish Lira","USD":"United States Dollar","ZAR":"South African Rand"}
+2026-06-09 22:36:25 CST INFO  com.laboratorio.eventos.ListaPeticiones 81 procesarPeticionCurrencies - [HILO] Se ha procesado la petición CURRENCIES con Id: 6
+2026-06-09 22:36:25 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 32
+2026-06-09 22:36:26 CST INFO  com.laboratorio.Main 39 main - [APP] Ciclo: 33
+2026-06-09 22:36:26 CST INFO  com.laboratorio.Main 43 main - [APP] Esperando finalizacion del hilo
+2026-06-09 22:36:30 CST INFO  com.laboratorio.Main 45 main - [APP] finalizando el programa ...
