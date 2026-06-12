@@ -1,8 +1,4 @@
-<%-- 
-    Document   : index
-    Created on : 10 jun 2026, 1:26:28 p.m.
-    Author     : canzervero
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,6 +8,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+
         <h1>Hello World!</h1>
         <h2>Ejemplos de expresiones</h2>
         <p>Hoy es <%= new java.util.Date() %></p>
@@ -57,5 +54,7 @@
         %>
         <p>5+3 es igual <%=suma(5,3)%></p>
         <p>7-2 es igual <%=resta(7,2)%></p>
+        
+        <p><a href="etiquetas.jsp">Uso de las etiquetas</a></p>
     </body>
 </html>

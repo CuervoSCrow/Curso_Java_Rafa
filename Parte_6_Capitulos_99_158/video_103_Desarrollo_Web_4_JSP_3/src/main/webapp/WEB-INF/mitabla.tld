@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+  <tlib-version>1.0</tlib-version>
+  <short-name>mitabla</short-name>
+  
+  <tag>
+      <name>MiTabla</name>
+      <tag-class>com.laboratorio.video_103_desarrollo_web_4_jsp_3.MiTabla</tag-class>
+      <body-content>empty</body-content>
+      <attribute>
+          <name>columna1</name>
+          <required>true</required>
+          <type>com.laboratorio.video_103_desarrollo_web_4_jsp_3.Columna</type>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+          <name>columna2</name>
+          <required>true</required>
+          <type>com.laboratorio.video_103_desarrollo_web_4_jsp_3.Columna</type>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+  </tag>
+</taglib>
