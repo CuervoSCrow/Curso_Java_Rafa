@@ -8,8 +8,8 @@
     </head>
     <body>
         <%
-            String nombre = request.getParameter("nombre");
-            String ciudad = request.getParameter("ciudad");
+            String nombre=request.getParameter("nombre");
+            String ciudad=request.getParameter("ciudad");
             String preferencia = request.getParameter("preferencia");
             if(preferencia==null){
                 preferencia="No";
@@ -17,7 +17,7 @@
             session.setAttribute("usuario",nombre);
             session.setAttribute("ciudad",ciudad);
             
-            Cookie  nombreUsuario = new Cookie("bienvenida.nombre",nombre);
+            Cookie nombreUsuario = new Cookie("bienvenida.nombre",nombre);
             nombreUsuario.setMaxAge(7*24*60*60);
             response.addCookie(nombreUsuario);
             
@@ -30,10 +30,9 @@
             response.addCookie(preferenciaUsuario);
         %>
         <h1>Hello World!</h1>
-        <p>Se ha conectado <%= nombre %>  de la ciudad <%=ciudad%></p>
-        <p>El usuario quiere recordar la informacion: <%=preferencia%></p>
-        <p><a href="informacion.jsp">Informacion Adicional</a></p>
-        <p><a href="index.jsp">Volver al página principal</a></p>
-            
+        <p>Se ha conectado <%=nombre%> de la ciudad <%=ciudad%></p>
+        <p>El usuario quiere recordar su información: <%=preferencia%></p>
+        <p><a href="informacion.jsp">Información Adicional</a></p>
+        <p><a href="index_get.jsp">Volver a la Pagina </a></p>
     </body>
 </html>
