@@ -15,6 +15,8 @@
         %>
         <h1>Bienvenida</h1>
         <p>Se ha conectado <%= nombre%> de la ciudad <%= ciudad %></p>
-        <p><a href="informacion.jsp">Informacion adicional</a>
+        <p><a href="informacion.jsp">Informacion adicional</a></p>
+        <p><a href="index.html">Volver al página principal</a></p>
+            
     </body>
 </html>

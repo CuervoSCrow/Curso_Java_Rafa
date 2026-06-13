@@ -1,3 +1,4 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -7,15 +8,13 @@
     </head>
     <body>
         <%
-            String usuario= (String) session.getAttribute("usuario");
+            String usuario = (String) session.getAttribute("usuario");
             String ciudad = (String) session.getAttribute("ciudad");
         %>
-        <h1>Informacion adicional</h1>
-        <p>Información del navegador: <%= request.getHeader("User-Agent") %></p>
+        <h1>Informacion Adicional</h1>
+        <p>Información del Navegador: <%= request.getHeader("User-Agent") %> </p>
         <p>Información del idioma: <%= request.getLocale() %></p>
         <p>Información del usuario: <% out.println(usuario); %></p>
         <p>Información del lugar de conexión: <%= ciudad %></p>
-        
-        <p><a href="index.html">Volver al página principal</a></p>
     </body>
 </html>
