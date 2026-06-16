@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(".do")
+@WebFilter("*.do")
 public class LogueadoFilter implements Filter{
 
     private FilterConfig filterConfig=null;
@@ -23,11 +23,13 @@ public class LogueadoFilter implements Filter{
     @Override
     public void init(FilterConfig filterConfig){
         this.filterConfig=filterConfig;
+        System.out.println("====== FILTRO INICIALIZADO =======");
     }
     @Override
     public void doFilter(ServletRequest sr, ServletResponse sr1, FilterChain fc) throws IOException, ServletException {
         
         log("He entrado al filtro LogueadoFilter");
+        System.out.println("He entrado al filtro LogueadoFilter");
         
         HttpServletRequest request =(HttpServletRequest) sr;
         String usuario=(String) request.getSession().getAttribute("usuario");
