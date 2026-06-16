@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
         }
         String clave=request.getParameter("clave");
         if(clave.equals("1234")){
-            request.getSession().setAttribute(usuario, usuario);
+            request.getSession().setAttribute("usuario", usuario);
             request.setAttribute("rol", "Operador");
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/sistema.jsp");
             dispatcher.forward(request, response);
