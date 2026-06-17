@@ -31,11 +31,11 @@ public class AutenticacionFilter implements Filter{
 //          -Servlet login
 //          -Recursos estáticos (CSS,JS, imágenes
 //          -Pagina Bienvenida (login.jsp)
-        if(uri.contains("/login")||
-           uri.endsWith(".jsp")||
+        if(uri.contains("/login")||           
            uri.endsWith(".css")||
            uri.endsWith(".js")||
-           uri.equals("/MiAppFilter-1.0-SNAPSHOT/")){// Permitir raíz
+           uri.equals(httpRequest.getContextPath()+"/") ||
+           uri.equals(httpRequest.getContextPath())) {// Permitir raíz
             fc.doFilter(sr, sr1);
             return;            
         }
