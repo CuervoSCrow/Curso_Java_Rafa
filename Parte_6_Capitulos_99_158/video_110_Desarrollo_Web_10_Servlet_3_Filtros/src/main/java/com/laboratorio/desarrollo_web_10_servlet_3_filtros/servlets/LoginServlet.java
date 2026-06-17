@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-package com.laboratorio.video_108_desarrollo_web_9_servlets_2_redirect_forward;
+
+package com.laboratorio.desarrollo_web_10_servlet_3_filtros.servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -12,26 +9,26 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 
-/**
- *
- * @author canzervero
- */
+
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
-        
+
+   
+   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usuario = request.getParameter("usuario");
+     
+        String usuario = request.getParameter("usuario");      
         if(usuario==null || usuario.isEmpty()){
-            response.sendRedirect("index.jsp?error=Debe suministrar un nombre de usuario!");
+            response.sendRedirect("index.jsp?error=Debe suministrar un nombre de usuario");
         }
-        String clave= request.getParameter("clave");
+        String clave = request.getParameter("clave");
         if(clave.equals("1234")){
-            request.setAttribute("rol", "Operador");
-            RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/sistema.jsp");
+            request.getSession().setAttribute("usuario",usuario);
+            request.setAttribute("rol","Operador");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/sistema.jsp");
             dispatcher.forward(request, response);            
         }else{
             if(clave.equals("12345")){
@@ -39,9 +36,10 @@ public class LoginServlet extends HttpServlet {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/sistema.jsp");
                 dispatcher.forward(request, response);
             }else{
-                response.sendRedirect("index.jsp?error=Nombre de usuario o clave incorrecta!");
-            }
+                response.sendRedirect("index.jsp?error=Nombre de ususario o clave incorrecta");
+            }            
         }
-    }        
+    }
 
+   
 }
