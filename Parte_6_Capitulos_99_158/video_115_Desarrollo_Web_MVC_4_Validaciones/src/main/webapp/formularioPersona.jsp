@@ -1,6 +1,6 @@
 <%@page import="com.laboratorio.video_115_desarrollo_web_mvc_4_validaciones.modelo.Persona"%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -17,41 +17,52 @@
     <body>
         <%
             Persona persona = (Persona) request.getAttribute("persona");
+            String errores = (String) request.getAttribute("errores");
         %>
         <div class="container">
 
             <h1>Datos de la Persona:</h1>
+            
+            <c:if test="${errores != null}">
+                <div class="alert alert-danger" role=""alert>
+                    <%= errores %>
+                </div>
+            </c:if>
+                
 
             <form class="row g-3">  
                 
-                <input type="hidden" id="accion" name="accion" value="agregar">
+                <input type="hidden" id="accion" name="accion" value="guardar">
                 
                 <div class="col-md-6">
                     <label for="codigo" class="form-label">Codigo</label>
                     <input type="number" class="form-control" id="codigo" 
-                           disabled="true" value="<%=persona.getCodigo()%>">
+                           disabled="true" name="codigo" value="<%=persona.getCodigo()%>">
                 </div>
                 
                 <div class="col-12">
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre>
+                    <input type="text" class="form-control" id="nombre" name="nombre">
                 </div>
                 <div class="col-12">
                     <label for="apellidos" class="form-label">Apellidos</label>
-                    <input type="text" class="form-control" id="apellidos">
+                    <input type="text" class="form-control" id="apellidos" name="apellidos">
                 </div>
                 <div class="col-md-6">
                     <label for="fechaNac" class="form-label">Fecha de Nacimiento</label>
-                    <input type="date" class="form-control" id="fechaNac">
+                    <input type="date" class="form-control" id="fechaNac" name="fechaNac">
                 </div>
                 <div class="col-md-6">
                     <label for="experiencia" class="form-label">Años de experiencia</label>
-                    <input type="number" class="form-control" id="experiencia">
+                    <input type="number" class="form-control" id="experiencia" name="experiencia">
                 </div>
                 
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
-                    <button type="submit" class="btn btn-secondary btn-lg" formaction="PersonasController">Regresar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="PersonasController" class="btn btn-secondary">
+                        <span class="bi bi-arrow-left"></span>Regresar                            
+                    </a>
+                    
                 </div>
                
             </form>

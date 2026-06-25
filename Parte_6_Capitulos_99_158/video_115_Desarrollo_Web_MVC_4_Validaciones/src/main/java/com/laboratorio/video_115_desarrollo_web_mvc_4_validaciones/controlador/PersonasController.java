@@ -50,9 +50,20 @@ public class PersonasController extends HttpServlet {
         }
         log.log(Level.INFO,"Se esta ejecutando el Servlet. Accion: "+accion);
         
+        String resultado;
+        
         switch(accion){
             case "agregar":
                 crearPersona(request,response);
+                break;
+            case "guardar":
+                resultado = validarPersona(request);
+                if(resultado.isEmpty()){
+                    log.log(Level.INFO,"Se procede a guardar la persona!");
+                    listarPersona(request,response);
+                }else{
+                    mostrarErrores(resultado,request,response);
+                }
                 break;
             case "listar":
             default:
@@ -69,6 +80,7 @@ public class PersonasController extends HttpServlet {
         Persona persona =  new Persona();
         
         request.setAttribute("persona", persona);
+        request.setAttribute("errores",null);
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("/formularioPersona.jsp");
         dispatcher.forward(request, response);
@@ -90,6 +102,31 @@ public class PersonasController extends HttpServlet {
         request.setAttribute("lista_personas", personas);
         RequestDispatcher dispatcher = request.getRequestDispatcher("personas.jsp");
         dispatcher.forward(request, response);
+    }
+    
+    private String validarPersona(HttpServletRequest request){
+        String nombre= request.getParameter("nombre");
+        String apellidos=request.getParameter("apellidos");
+        String fechaNac= request.getParameter("fechaNac");
+        String experiencia = request.getParameter("experiencia");
+        
+        return personaDB.validar(nombre,apellidos,fechaNac,experiencia);
+    }
+    
+    private void mostrarErrores(
+            String errores,
+            HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        Persona persona = new Persona();
+        
+        request.setAttribute("persona", persona);
+        request.setAttribute("errores", errores);
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("formularioPersona.jsp");
+        dispatcher.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
