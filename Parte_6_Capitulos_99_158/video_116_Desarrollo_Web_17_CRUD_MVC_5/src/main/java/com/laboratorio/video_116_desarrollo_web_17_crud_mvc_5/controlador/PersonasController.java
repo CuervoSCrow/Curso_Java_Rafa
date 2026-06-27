@@ -62,6 +62,11 @@ public class PersonasController extends HttpServlet {
                 resultado = validarPersona(request);
                 if(resultado.isEmpty()){
                     log.log(Level.INFO,"Se procede a guardar la persona!");
+                    if(guardarPersona(request,response)){
+                        
+                    }else{
+                        
+                    }
                     listarPersona(request,response);
                 }else{
                     mostrarErrores(resultado,request,response);
@@ -137,6 +142,27 @@ public class PersonasController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("formularioPersona.jsp");
         dispatcher.forward(request, response);
         
+    }
+    
+    private boolean guardarPersona(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int codigo = Integer.parseInt(request.getParameter("codigo"));
+        String nombre = request.getParameter("nombre");
+        String apellidos = request.getParameter("apellidos");
+        String fechaNac = request.getParameter("fechaNac");
+        log.log(Level.INFO,"Fecha {0}",fechaNac);
+        String experiencia = request.getParameter("experiencia");
+        
+        if(codigo==0){
+            try{
+                return personaDB.insertar(nombre,apellidos,fechaNac,experiencia);
+            }catch(Exception e){
+                log.log(Level.SEVERE,"Error guardando los datos de la persona.");
+                return false;
+            }
+        }
+        
+        return true;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
