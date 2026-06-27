@@ -3,9 +3,11 @@ package com.laboratorio.video_116_desarrollo_web_17_crud_mvc_5.modelo;
 
 import com.laboratorio.video_116_desarrollo_web_17_crud_mvc_5.modelo.Persona;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,14 +80,39 @@ public class PersonaDB {
         }else{
             if(!experiencia.matches("^(0-9)+$")){
                 resultado.append("<p>La experiencia debe ser un numero.</p>");
-            }else{
-                if(Integer.parseInt(experiencia)<0){
-                    resultado.append("<p>La experiencia debe ser mayor o igual a 0.");
-                }
+            
             }
         }
         
         return resultado.toString();
+    }
+    
+    public boolean insertar(String nombre,
+            String apellidos,
+            String fechaNac,
+            String experiencia)throws Exception{
+        
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha= formato.parse(fechaNac);
+        java.sql.Date fechaSQL = new java.sql.Date(fecha.getTime());
+        try{
+            String query="INSERT INTO personas(nombre,apellidos,fecha_nacimiento,experiencia) +"
+                    + "VALUES (?,?,?,?)";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1,nombre);
+            ps.setString(2, apellidos);
+            ps.setDate(3, fechaSQL);
+            ps.setInt(4, Integer.parseInt(experiencia));
+            
+            int resultado = ps.executeUpdate();
+            if(resultado == 0){
+                return false;
+            }
+            
+        }catch(NumberFormatException | SQLException e){
+            throw e;
+        }
+        return true;
     }
     
 }
