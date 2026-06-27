@@ -1,6 +1,7 @@
 
-package com.laboratorio.video_115_desarrollo_web_mvc_4_validaciones.modelo;
+package com.laboratorio.video_116_desarrollo_web_17_crud_mvc_5.modelo;
 
+import com.laboratorio.video_116_desarrollo_web_17_crud_mvc_5.modelo.Persona;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
