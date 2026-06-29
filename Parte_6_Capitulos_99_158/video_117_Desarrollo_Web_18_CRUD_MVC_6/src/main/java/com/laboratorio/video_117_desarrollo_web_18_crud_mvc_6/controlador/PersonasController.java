@@ -74,6 +74,12 @@ public class PersonasController extends HttpServlet {
                     mostrarErrores(resultado,request,response);
                 }
                 break;
+            case "editar":                
+                if(!editarPersona(request,response)){
+                    mensaje=" Se ha presentado un error al resuperar los datos de la persona";
+                    listarPersona(mensaje,request,response);
+                }
+                break;
             case "listar":
             default:
                 listarPersona(null,request,response);
@@ -167,6 +173,33 @@ public class PersonasController extends HttpServlet {
             }
         }
         
+        return true;
+    }
+    
+    private boolean editarPersona(
+                HttpServletRequest request,
+                HttpServletResponse response)
+                throws ServletException, IOException{
+        int codigo = Integer.parseInt(request.getParameter("codigo"));
+        log.log(Level.INFO,"Codigo: {0}",codigo);
+        Persona persona;
+        try{
+            persona = personaDB.buscar(codigo);
+            if(persona==null){
+                return false;
+            }
+            
+        }catch(Exception e){
+            log.log(Level.SEVERE,"Error recuperando los datos de la persona");
+            return false;
+        }
+        PersonaRequest personaRequest = new PersonaRequest(persona);
+        
+        request.setAttribute("persona", personaRequest);
+        request.setAttribute("errores", null);
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/formularioPersona.jsp");
+        dispatcher.forward(request, response);
         return true;
     }
 
