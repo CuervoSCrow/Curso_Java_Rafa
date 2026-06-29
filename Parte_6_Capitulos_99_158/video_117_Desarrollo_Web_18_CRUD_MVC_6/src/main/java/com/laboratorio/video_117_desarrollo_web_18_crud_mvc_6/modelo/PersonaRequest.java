@@ -1,6 +1,8 @@
 
 package com.laboratorio.video_117_desarrollo_web_18_crud_mvc_6.modelo;
 
+import java.text.SimpleDateFormat;
+
 public class PersonaRequest {
     private int codigo;
     private String nombre;
@@ -22,6 +24,15 @@ public class PersonaRequest {
         this.apellidos = apellidos;
         this.fechaNac = fechaNac;
         this.experiencia = experiencia;
+    }
+    
+    public PersonaRequest(Persona persona) {
+        this.codigo=persona.getCodigo();
+        this.nombre=persona.getNombre();
+        this.apellidos=persona.getApellidos();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        this.fechaNac=formato.format(persona.getFechaNacimiento());
+        this.experiencia = String.valueOf(persona.getExperiencia());
     }
 
     public int getCodigo() {

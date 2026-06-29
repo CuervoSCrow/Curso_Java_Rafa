@@ -22,6 +22,7 @@
             <c:if test="${mensaje != null}">
                 <div class="alert alert-danger" role="alert">
                     <%=mensaje%>
+                </div>
             </c:if>
             <form action="PersonasController">
                 <input type="hidden" id="accion" name="accion" value="agregar">
@@ -46,7 +47,9 @@
                                     <td>${persona.fechaNacimiento}</td>
                                     <td>${persona.experiencia}</td>
                                     <th scope="col">
-                                        <button type="button" class="btn btn-outline-success">Editar</button>
+                                        <a href="PersonasController?accion=editar&codigo=${persona.codigo}" class="btn btn-outline-success">
+                                            <span class="bi bi-arrow-left"></span>Editar                           
+                                        </a>                                        
                                         <button type="button" class="btn btn-outline-danger">Eliminar</button>
                                     </th>
                                 </tr>

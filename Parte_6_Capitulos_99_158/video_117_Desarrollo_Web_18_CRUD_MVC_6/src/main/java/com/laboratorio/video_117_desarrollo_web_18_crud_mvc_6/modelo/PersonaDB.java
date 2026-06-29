@@ -113,4 +113,24 @@ public class PersonaDB {
         }
         return true;
     }    
+    public Persona buscar(int codigo)throws SQLException{
+        Persona persona=null;
+        try{
+            String query = "SELECT * FROM personas WHERE idpersonas = ?";
+            PreparedStatement ps =connection.prepareStatement(query);
+            ps.setInt(1, codigo);
+            ResultSet resultSet = ps.executeQuery();
+            if(resultSet.next()){
+                persona = new Persona();
+                persona.setCodigo(codigo);
+                persona.setNombre(resultSet.getString("nombre"));
+                persona.setApellidos(resultSet.getString("apellidos"));
+                persona.setFechaNacimiento(resultSet.getDate("fecha_nacimiento"));
+                persona.setExperiencia(resultSet.getInt("experiencia"));
+            }
+        }catch(SQLException e){
+            throw e;
+        }
+        return persona;
+    }
 }
