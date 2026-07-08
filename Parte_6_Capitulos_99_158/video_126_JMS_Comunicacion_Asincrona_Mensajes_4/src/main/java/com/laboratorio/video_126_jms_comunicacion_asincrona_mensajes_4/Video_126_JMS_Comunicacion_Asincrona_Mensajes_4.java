@@ -1,18 +1,26 @@
-package com.laboratorio.video_124_jms_comunicacion_asincrona_2;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.laboratorio.video_126_jms_comunicacion_asincrona_mensajes_4;
 
 import java.util.Properties;
 import javax.jms.JMSException;
-import javax.jms.Topic;
-import javax.jms.TopicConnection;
-import javax.jms.TopicConnectionFactory;
+import javax.jms.Queue;
+import javax.jms.QueueConnection;
+import javax.jms.QueueConnectionFactory;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-public class Video_124_JMS_Comunicacion_Asincrona_2 {
+/**
+ *
+ * @author canzervero
+ */
+public class Video_126_JMS_Comunicacion_Asincrona_Mensajes_4 {
 
     public static void main(String[] args) {
-        String usuario="canzervero";
+         String usuario="canzervero";
         String clave="cuervo";
         
         System.out.println("Iniciando la aplicación....");
@@ -37,58 +45,58 @@ public class Video_124_JMS_Comunicacion_Asincrona_2 {
         }
         System.out.println("El contexto inicial ha sido creado.");
         
-        // Crear la TopicConnectionFactory
-        TopicConnectionFactory connectionFactory;
+        // Crear la QueueConnectionFactory
+        QueueConnectionFactory connectionFactory;
         
         try{
                                 
-            connectionFactory = (TopicConnectionFactory)ic.lookup("jms/RemoteConnectionFactory");
+            connectionFactory = (QueueConnectionFactory)ic.lookup("jms/RemoteConnectionFactory");
             
         }catch(NamingException e){
-            System.out.println("Error al crear al TopicConnectionFactory");
+            System.out.println("Error al crear al QueueConnectionFactory");
             e.printStackTrace();    
             return;
         }
-        System.out.println("La TopicConnectionFactory ha sido creada");
+        System.out.println("La QueueConnectionFactory ha sido creada");
         
-        //Crear el TopicConnection
-        TopicConnection connection;
+        //Crear la QueueConnection
+        QueueConnection connection;
         
         try{
-          connection = connectionFactory.createTopicConnection(usuario,clave);
+          connection = connectionFactory.createQueueConnection(usuario,clave);
         }catch(JMSException e){
-            System.out.println("Error al crear TopicConnection");
+            System.out.println("Error al crear QueueConnection");
             return;
         }
-        System.out.println("TopicConnection ha sido creado");
+        System.out.println("QueueConnection ha sido creado");
         
-        //Obtener el acceso al topic
-        Topic topic;
+        //Obtener el acceso al Queue
+        Queue queue;
         try{
-            topic=(Topic) ic.lookup("jms/topic/tutorialtopic"); 
+            queue=(Queue) ic.lookup("jms/queue/tutorialqueue"); 
         }catch(NamingException e){
-            System.out.println("Error al obtener Topic");
+            System.out.println("Error al obtener queue");
             return;
         }
-        System.out.println("Topic ha sido obtenido");
+        System.out.println("Queue ha sido obtenido");
         
         //Iniciar el envio y recepcion del mensaje 
         
-        Productor productor = null;
-        Consumidor consumidor = null;
-        Consumidor consumidor2 = null;
-        Consumidor consumidor3 = null;
+        Sender sender = null;
+        Receiver receiver1 = null;
+        Receiver receiver2 = null;
+        Receiver receiver3 = null;
         
         try{
             connection.start();
-            productor = new Productor(connection, topic);
-            consumidor = new Consumidor(1,connection,topic);
-            consumidor2 = new Consumidor(2,connection,topic);
-            consumidor3 = new Consumidor(3,connection, topic);
+            sender = new Sender(connection, queue);
+            receiver1 = new Receiver(1,connection,queue);
+            receiver2 = new Receiver(2,connection,queue);
+            receiver3 = new Receiver(3,connection, queue);
             
             System.out.println("Objetos del test creados");
             
-            Thread hilo = new Thread(productor);
+            Thread hilo = new Thread(sender);
             hilo.start();
             
             hilo.join();
@@ -102,17 +110,17 @@ public class Video_124_JMS_Comunicacion_Asincrona_2 {
         try{
             connection.stop();
             
-            if(productor != null){
-                productor.cerrar();
+            if(sender != null){
+                sender.cerrar();
             }
-            if(consumidor != null){
-                consumidor.cerrar();
+            if(receiver1 != null){
+                receiver1.cerrar();
             }
-            if(consumidor2 != null){
-                consumidor2.cerrar();
+            if(receiver2 != null){
+                receiver2.cerrar();
             }
-            if(consumidor3 != null){
-                consumidor3.cerrar();   
+            if(receiver3 != null){
+                receiver3.cerrar();   
             }
             connection.close();
             ic.close();            
