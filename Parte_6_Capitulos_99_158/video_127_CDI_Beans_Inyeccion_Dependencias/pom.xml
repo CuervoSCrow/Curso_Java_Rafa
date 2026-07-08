@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.laboratorio</groupId>
+    <artifactId>video_127_CDI_Beans_Inyeccion_Dependencias</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>video_127_CDI_Beans_Inyeccion_Dependencias</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.wildfly>40.0.0.Final</version.wildfly>
+        <maven.compiler.release>17</maven.compiler.release>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- BOM principal para Jakarta EE 10 (compatible con WildFly 40 EE 10) -->
+            <dependency>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-standard-ee-bom</artifactId>
+                <version>${version.wildfly}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Si necesitas soporte para MicroProfile, descomenta este BOM adicional
+            <dependency>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-standard-expansion-bom</artifactId>
+                <version>${version.wildfly}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            -->
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- API de Jakarta EE (todas con scope 'provided') -->
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Logging: SLF4J API (WildFly ya la incluye, por eso 'provided') -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Tus dependencias de negocio (ej. driver JDBC) van aquí con scope 'compile' -->
+        <!--
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.2</version>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>2.0.1</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.12.1</version>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+            </plugin>
+            <!-- Plugin opcional para desplegar directamente en WildFly -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly}</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
