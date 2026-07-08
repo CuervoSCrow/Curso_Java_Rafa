@@ -20,7 +20,7 @@ import javax.naming.NamingException;
 public class Video_126_JMS_Comunicacion_Asincrona_Mensajes_4 {
 
     public static void main(String[] args) {
-         String usuario="canzervero";
+        String usuario="canzervero";
         String clave="cuervo";
         
         System.out.println("Iniciando la aplicación....");
@@ -127,5 +127,6 @@ public class Video_126_JMS_Comunicacion_Asincrona_Mensajes_4 {
         }catch(Exception e){
             System.out.println("Error finalizando procesos");
         }
+    
     }
 }

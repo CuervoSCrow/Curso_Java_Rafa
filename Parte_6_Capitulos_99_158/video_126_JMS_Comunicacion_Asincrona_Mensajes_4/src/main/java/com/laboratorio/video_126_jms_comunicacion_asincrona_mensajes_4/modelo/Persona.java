@@ -67,9 +67,14 @@ public class Persona {
     public void setExperencia(int experencia) {
         this.experencia = experencia;
     }
-    
-    
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Persona{" + 
+                "codigo=" + codigo + 
+                ", nombre=" + nombre + 
+                ", apellidos=" + apellidos + 
+                ", fechaNac=" + fechaNac + 
+                ", experencia=" + experencia + '}';
+    }    
 }

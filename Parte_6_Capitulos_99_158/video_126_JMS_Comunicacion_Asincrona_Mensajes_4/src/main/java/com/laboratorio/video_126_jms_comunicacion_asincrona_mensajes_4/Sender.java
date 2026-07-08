@@ -1,8 +1,6 @@
 package com.laboratorio.video_126_jms_comunicacion_asincrona_mensajes_4;
 
 import com.laboratorio.video_126_jms_comunicacion_asincrona_mensajes_4.modelo.Persona;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Date;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -11,6 +9,8 @@ import javax.jms.QueueConnection;
 import javax.jms.QueueSender;
 import javax.jms.QueueSession;
 import javax.jms.Session;
+import org.apache.activemq.artemis.commons.shaded.json.JsonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class Sender implements Runnable{
     private final QueueSession session;
@@ -25,25 +25,28 @@ public class Sender implements Runnable{
 
     @Override
     public void run() {
+        
         Message message;
+        
         try{
             for(int i=0; i<10; i++){
-                if(i % 2 == 0){
+                if(i %2 == 0){
                     message = this.session.createTextMessage(String.format("Mensaje numero %02d",i+1));
                     message.setJMSType("Mensaje");
                 }else{
                     Persona persona = new Persona(i,"Test","Test",new Date(),i);
                     ObjectMapper objectMapper = new ObjectMapper();
                     String personaStr = objectMapper.writeValueAsString(persona);
-                    
                     message = this.session.createTextMessage(personaStr);
                     message.setJMSType("Persona");
+                    message.setJMSTimestamp(System.currentTimeMillis());
+                    message.setStringProperty("Personalizada", "Valor personalizado");
                 }
-                
+                message.setJMSMessageID(String.format("ID:MSG%d",i));
                 this.sender.send(message);
                 Thread.sleep(1000);
             }
-        }catch(InterruptedException | JMSException | JsonProcessingException e){
+        }catch(JsonException | InterruptedException | JMSException e){
             System.out.println("Error al enviar un mensaje");
                   
         }
