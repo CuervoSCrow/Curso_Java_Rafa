@@ -4,7 +4,7 @@
     <groupId>com.laboratorio</groupId>
     <artifactId>video_132_Enterprise_JavaBean_Introduccion</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>video_132_Enterprise_JavaBean_Introduccion-1.0-SNAPSHOT</name>
     
     <properties>
@@ -31,12 +31,7 @@
                     <source>17</source>
                     <target>17</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.4.0</version>
-            </plugin>
+            </plugin>            
         </plugins>
     </build>
 </project>
