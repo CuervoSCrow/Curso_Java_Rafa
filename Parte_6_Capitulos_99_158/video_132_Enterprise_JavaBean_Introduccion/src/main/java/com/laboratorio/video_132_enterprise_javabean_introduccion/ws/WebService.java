@@ -1,20 +1,20 @@
 
 package com.laboratorio.video_132_enterprise_javabean_introduccion.ws;
 
-import com.laboratorio.video_132_enterprise_javabean_introduccion.ejbean.BeanForTestLocal;
-import com.laboratorio.video_132_enterprise_javabean_introduccion.ejbean.BeanForTestRemote;
+import com.laboratorio.video_132_enterprise_javabean_introduccion.ejb.BeanForTestLocal;
+import com.laboratorio.video_132_enterprise_javabean_introduccion.ejb.BeanForTestRemote;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 
 @Path("/test")
 public class WebService {
-
+    
     @EJB
     private BeanForTestLocal beanLocal;
     
     @EJB
-    private BeanForTestRemote beanRemoto;
+    private BeanForTestRemote beanRemote;
     
     @GET
     @Path("/local")
@@ -25,6 +25,7 @@ public class WebService {
     @GET
     @Path("/remote")
     public String ejecutarRemote(){
-        return beanRemoto.remoteFunction();
+        return beanRemote.remoteFunction();
     }
+    
 }

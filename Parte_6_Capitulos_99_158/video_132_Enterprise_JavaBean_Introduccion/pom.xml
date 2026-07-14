@@ -19,8 +19,8 @@
             <version>${jakartaee}</version>
             <scope>provided</scope>
         </dependency>
-    </dependencies>
-    
+    </dependencies>    
+
     <build>
         <plugins>
             <plugin>
