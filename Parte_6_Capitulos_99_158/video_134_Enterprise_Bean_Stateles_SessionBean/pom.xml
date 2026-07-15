@@ -4,7 +4,7 @@
     <groupId>com.laboratorio</groupId>
     <artifactId>video_134_Enterprise_Bean_Stateles_SessionBean</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>video_134_Enterprise_Bean_Stateles_SessionBean-1.0-SNAPSHOT</name>
     
     <properties>
