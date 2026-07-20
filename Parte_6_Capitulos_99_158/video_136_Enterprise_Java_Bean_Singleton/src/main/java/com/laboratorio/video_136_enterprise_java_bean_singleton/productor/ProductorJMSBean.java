@@ -55,7 +55,7 @@ public class ProductorJMSBean {
                 connection.stop();
                 connection.close();
             }
-            logger.info("Recursos JMS liberados.");
+            logger.info("Recursos JMS liberados ====================================.");
         } catch (JMSException e) {
             logger.error("Error al cerrar recursos JMS", e);
         }
