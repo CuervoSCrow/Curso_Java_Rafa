@@ -18,7 +18,7 @@ public class EnvioMensajeService {
     
     @GET
     public String enviarMensaje(){
-        logger.trace("Enviando un mensaje");
+        logger.info("Enviando un mensaje");
         try{
             Message message = productor.getSession().createTextMessage("Mensaje de prueba");
             productor.enviarMensaje(message);

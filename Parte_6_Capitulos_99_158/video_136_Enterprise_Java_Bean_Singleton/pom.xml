@@ -6,70 +6,22 @@
     <artifactId>video_136_Enterprise_Java_Bean_Singleton</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>video_136_Enterprise_Java_Bean_Singleton</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jakartaee.version>11.0.0-M1</jakartaee.version>
-        <!-- Versiones para dependencias extra -->
-        <artemis.version>2.31.2</artemis.version>   <!-- Compatible con WildFly 40 -->
-        <wildfly.naming.version>2.0.1.Final</wildfly.naming.version>
-        <jboss.remoting.version>5.0.27.Final</jboss.remoting.version>
-        <xnio.version>3.8.16.Final</xnio.version>
-        <slf4j.version>2.0.9</slf4j.version>
+        <slf4j.version>2.0.13</slf4j.version>
     </properties>
 
     <dependencies>
-        <!-- Jakarta EE 11 API (provided por el servidor) -->
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
             <version>${jakartaee.version}</version>
             <scope>provided</scope>
         </dependency>
-
-        <!-- Cliente JMS de Artemis (necesario para conectarse al broker) -->
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>artemis-jms-client</artifactId>
-            <version>${artemis.version}</version>
-        </dependency>
-        <!-- Artemis commons (dependencia transitiva, pero se explicita por claridad) -->
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>artemis-commons</artifactId>
-            <version>${artemis.version}</version>
-        </dependency>
-
-        <!-- Cliente de nomenclatura de WildFly (para JNDI remoto) -->
-        <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-naming-client</artifactId>
-            <version>${wildfly.naming.version}</version>
-        </dependency>
-
-        <!-- Remoting (necesario para http-remoting) -->
-        <dependency>
-            <groupId>org.jboss.remoting</groupId>
-            <artifactId>jboss-remoting</artifactId>
-            <version>${jboss.remoting.version}</version>
-        </dependency>
-
-        <!-- XNIO (E/S para remoting) -->
-        <dependency>
-            <groupId>org.jboss.xnio</groupId>
-            <artifactId>xnio-api</artifactId>
-            <version>${xnio.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.xnio</groupId>
-            <artifactId>xnio-nio</artifactId>
-            <version>${xnio.version}</version>
-        </dependency>
-
-        <!-- Logging (SLF4J API, el servidor provee la implementación) -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
