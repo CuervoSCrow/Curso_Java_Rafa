@@ -17,7 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Singleton
-public class ProductorJMSBean {
+@LocalBean
+public class ProductorJMSBean implements ProductorJMSBeanRemote{
     private static final Logger logger = LoggerFactory.getLogger(ProductorJMSBean.class);
     
     @Resource(lookup =  "java:jboss/exported/jms/topic/tutorialtopic")
@@ -51,6 +52,21 @@ public class ProductorJMSBean {
 
     public TopicSession getSession() {
         return session;
+    }
+    
+    @Override
+    public void enviarPersona(String personaJson){
+        logger.info("Se ha recibido datos de una persona remota &&&&&&&&&&&&&&&");
+        try{
+            Message message = this.session.createTextMessage(personaJson);
+            message.setStringProperty("TipoMensaje", "Persona");
+            this.enviarMensaje(message);
+        }catch(Exception e){
+            logger.error("Error al enviar los datos de la Persona Remota");
+            logger.error("Error: "+e.getMessage());
+        }
+        
+        logger.info("Los datos de la persona remota han sido enviados");
     }
     
     @PreDestroy
